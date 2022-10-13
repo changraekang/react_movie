@@ -13,6 +13,9 @@ const Home = () => {
   const handleInterClickButton = () => {
     navigate("/quiz", { state: "in" });
   };
+  const handleQuizClickButton = () => {
+    navigate("/quiz", { state: "in" });
+  };
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>
@@ -21,8 +24,7 @@ const Home = () => {
         <img src={Logo} width={350} height={350}></img>
       </LogoImage>
       <ButtonGroups>
-        <Button onClick={handleKoClickButton}>국내영화</Button>
-        <Button onClick={handleInterClickButton}>해외영화</Button>
+        <Button onClick={handleQuizClickButton}>퀴즈시작</Button>
       </ButtonGroups>
     </Wrapper>
   );
