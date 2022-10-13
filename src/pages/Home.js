@@ -57,6 +57,7 @@ const ButtonGroups = styled.div`
 const Title = styled.div`
   font-size: 30pt;
   margin-top: 40px;
+  font-weight: 'bold'; 
 `;
 
 const LogoImage = styled.div`

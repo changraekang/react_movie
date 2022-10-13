@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-
+import Hint1 from "../components/Hint1";
+import Hint2 from "../components/Hint2";
+import Hint3 from "../components/Hint3";
 const Quiz = () => {
   const { state } = useLocation();
   const [Answer, setAnswer] = useState();
   const [quizNum, setQuizNum] = useState(0);
+  const [hint1, sethint1] = useState(true);
+  const [hint2, sethint2] = useState(false);
+  const [hint3, sethint3] = useState(false);
+
+  
   const onPressInputText = (e) => {
     if (e.key === "Enter") {
       next();
@@ -22,13 +29,40 @@ const Quiz = () => {
       setQuizNum(quizNum + 1);
   };
   const ClickHint1 = () => {
-      
+    sethint1(true);
+    sethint2(false);
+    sethint3(false);
   };
   const ClickHint2 = () => {
-      
+    sethint1(false);
+    sethint2(true);
+    sethint3(false);
   };
   const ClickHint3 = () => {
-      
+    sethint1(false);
+    sethint2(false);
+    sethint3(true);
+  };
+  const RenderHint1 = () => {
+    return (
+     <>
+     <div>힌트1</div>
+     </>
+  );
+  };
+  const RenderHint2 = () => {
+    return (
+      <>
+      <div>힌트2</div>
+      </>
+   );
+  };
+  const RenderHint3 = () => {
+    return (
+      <>
+      <div>힌트3</div>
+      </>
+   );
   };
   return (
     <Wrapper>
@@ -45,6 +79,9 @@ const Quiz = () => {
         </Button>
       </ButtonWrapper>
       <InputContainer>
+        {hint1 && <Hint1 />}
+        {hint2 && <Hint2 />}
+        {hint3 && <Hint3 />}
                   <InputLabel>정답</InputLabel>
                   <Input
                     type={"input"}
@@ -76,9 +113,10 @@ const InputContainer = styled.div`
 `;
 
 const InputLabel = styled.label`
-  font-size: 12px;
-  color: #727272;
+  font-size: 24px;
+  color: 'black';
   margin: 0px;
+  font-weight: bold; 
 `;
 
 const Input = styled.input`
