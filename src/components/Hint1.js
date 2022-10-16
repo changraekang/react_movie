@@ -1,11 +1,16 @@
-import React from 'react';
+import React from "react";
+import ReactAudioPlayer from "react-audio-player";
 
-const Hint1 = () => {
-    return (
-        <div>
-            <img src="https://moviequizkangchangrae.s3.ap-northeast-2.amazonaws.com/level3/109.jpg" alt="" width={350} height={500}/> 
-        </div>
-    );
+const Hint1 = ({ number }) => {
+  return (
+    <div>
+      <ReactAudioPlayer
+        src={`https://static.moviequizrae.fun/level1/${number}.mp3`}
+        autoPlay
+        controls
+      />
+    </div>
+  );
 };
 
 export default Hint1;

@@ -15,8 +15,7 @@ const Home = () => {
   const handleQuizClickButton = () => {
     navigate("/quiz", { state: "in" });
   };
-  const Logo =
-    "https://s3.ap-northeast-2.amazonaws.com/static.moviequizrae.fun/logo/popcorn.jpeg";
+  const Logo = "http://static.moviequizrae.fun/logo/popcorn.jpeg";
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>
