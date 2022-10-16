@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../assets/popcorn.jpeg";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +15,8 @@ const Home = () => {
   const handleQuizClickButton = () => {
     navigate("/quiz", { state: "in" });
   };
+  const Logo =
+    "https://s3.ap-northeast-2.amazonaws.com/static.moviequizrae.fun/logo/popcorn.jpeg";
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>
@@ -57,7 +58,7 @@ const ButtonGroups = styled.div`
 const Title = styled.div`
   font-size: 30pt;
   margin-top: 40px;
-  font-weight: 'bold'; 
+  font-weight: "bold";
 `;
 
 const LogoImage = styled.div`

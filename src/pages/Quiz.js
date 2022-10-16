@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -12,13 +12,15 @@ const Quiz = () => {
   const [hint1, sethint1] = useState(true);
   const [hint2, sethint2] = useState(false);
   const [hint3, sethint3] = useState(false);
+  useEffect(() => {
+    console.log();
+  }, []);
 
-  
   const onPressInputText = (e) => {
     if (e.key === "Enter") {
       next();
-      setAnswer('');
-      console.log(quizNum + "퀴즈번호")
+      setAnswer("");
+      console.log(quizNum + "퀴즈번호");
     }
   };
 
@@ -26,7 +28,7 @@ const Quiz = () => {
     setAnswer(e.target.value);
   };
   const next = () => {
-      setQuizNum(quizNum + 1);
+    setQuizNum(quizNum + 1);
   };
   const ClickHint1 = () => {
     sethint1(true);
@@ -45,52 +47,46 @@ const Quiz = () => {
   };
   const RenderHint1 = () => {
     return (
-     <>
-     <div>힌트1</div>
-     </>
-  );
+      <>
+        <div>힌트1</div>
+      </>
+    );
   };
   const RenderHint2 = () => {
     return (
       <>
-      <div>힌트2</div>
+        <div>힌트2</div>
       </>
-   );
+    );
   };
   const RenderHint3 = () => {
     return (
       <>
-      <div>힌트3</div>
+        <div>힌트3</div>
       </>
-   );
+    );
   };
   return (
     <Wrapper>
       <h1>{quizNum} Quiz</h1>
       <ButtonWrapper>
-        <Button onClick={ClickHint1}>
-          1
-        </Button>
-        <Button onClick={ClickHint2}>
-          2
-        </Button>
-        <Button onClick={ClickHint3}>
-          3
-        </Button>
+        <Button onClick={ClickHint1}>1</Button>
+        <Button onClick={ClickHint2}>2</Button>
+        <Button onClick={ClickHint3}>3</Button>
       </ButtonWrapper>
       <InputContainer>
         {hint1 && <Hint1 />}
         {hint2 && <Hint2 />}
         {hint3 && <Hint3 />}
-                  <InputLabel>정답</InputLabel>
-                  <Input
-                    type={"input"}
-                    placeholder='정답을 입력해주세요'
-                    onChange={onChangeAnswer}
-                    value={Answer}
-                    onKeyPress={onPressInputText}
-                    />
-                </InputContainer>
+        <InputLabel>정답</InputLabel>
+        <Input
+          type={"input"}
+          placeholder="정답을 입력해주세요"
+          onChange={onChangeAnswer}
+          value={Answer}
+          onKeyPress={onPressInputText}
+        />
+      </InputContainer>
     </Wrapper>
   );
 };
@@ -109,14 +105,13 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  
 `;
 
 const InputLabel = styled.label`
   font-size: 24px;
-  color: 'black';
+  color: "black";
   margin: 0px;
-  font-weight: bold; 
+  font-weight: bold;
 `;
 
 const Input = styled.input`
@@ -130,22 +125,22 @@ const Input = styled.input`
 `;
 
 const ButtonWrapper = styled.div`
-    width: 20%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: '10px';
+  width: 20%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: "10px";
 `;
 const Button = styled.div`
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 0.3rem 0.875rem;
-    color:white;
-    font-size: 0.875rem;
-    background-color: blue;
-    cursor: pointer;
-    border-radius: 4px;
-    word-break: keep-all;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 0.3rem 0.875rem;
+  color: white;
+  font-size: 0.875rem;
+  background-color: blue;
+  cursor: pointer;
+  border-radius: 4px;
+  word-break: keep-all;
 `;
