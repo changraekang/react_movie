@@ -75,7 +75,7 @@ const AnswerSheet = () => {
 export default AnswerSheet;
 const UserAnswerSheet = styled.div`
   height: 100vh;
-  width: 30%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
