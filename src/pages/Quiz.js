@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { QuizQuestion, QuizAnswer } from "../atom/Atom";
 import styled from "styled-components";
 import Hint1 from "../components/Hint1";
 import Hint2 from "../components/Hint2";
 import Hint3 from "../components/Hint3";
+import { useRecoilState } from "recoil";
 const Quiz = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
+  const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
+  const [quizans, setQuizans] = useRecoilState(QuizAnswer);
+
   const [Answer, setAnswer] = useState();
-  const [quizNum, setQuizNum] = useState(1);
+  const [quizNum, setQuizNum] = useState(0);
   const [quizNumber, setQuizNumber] = useState(0);
   const [quizCount, setQuizCount] = useState([]);
   const [hint1, sethint1] = useState(true);
   const [hint2, sethint2] = useState(false);
   const [hint3, sethint3] = useState(false);
+  const [UserInput, setUserInput] = useState(false);
   useEffect(() => {
     //1. 퀴즈갯수는 6개
     let quizSeed = []; //6개로 값이 나열될것이기 때문에 배열처리 - 값은 담지 않음
@@ -23,40 +30,47 @@ const Quiz = () => {
       //새로 추가될 숫자 : 1~186사이의 숫자가 랜덤하게 처리
       //random() : 0~1사이의 랜덤한 소수
       //floor() : 내림처리해서 정수로 변경
-      let num = Math.floor(Math.random() * 185) + 1;
+      let num = Math.floor(Math.random() * 160) + 1;
 
       //현재 상태는 같은 숫자가 나올수 있음
       //lotto라는 배열에 담긴 숫자와 같이 같으면 안됨
       for (let j in quizSeed) {
         if (num === quizSeed[j]) {
           //현재 새로나온 숫자가 기존 숫자와 같으면
-          num = Math.floor(Math.random() * 185) + 1;
+          num = Math.floor(Math.random() * 160) + 1;
         }
       }
 
       //push() - 배열에 마지막에 값추가메서드
+      console.log(quizSeed);
       quizSeed.push(num);
     }
-    console.log(quizSeed);
     setQuizCount(quizSeed);
+    setQuizidx(quizSeed);
   }, []);
 
   const onPressInputText = (e) => {
     if (e.key === "Enter") {
       next();
       setAnswer("");
-      console.log(quizNum + "퀴즈번호");
+      const answerArray = quizans;
+      setQuizans([...answerArray, Answer]);
     }
   };
 
   const onChangeAnswer = (e) => {
-    setAnswer(e.target.value);
+    setAnswer(e.target.value.trim());
   };
   const next = () => {
-    setQuizNum(quizNum + 1);
-    sethint1(true);
-    sethint2(false);
-    sethint3(false);
+    if (quizNum < 5) {
+      setQuizNum(quizNum + 1);
+      setAnswer("");
+      sethint1(true);
+      sethint2(false);
+      sethint3(false);
+    } else {
+      navigate("/user");
+    }
   };
   const ClickHint1 = () => {
     sethint1(true);
@@ -75,16 +89,16 @@ const Quiz = () => {
   };
   return (
     <Wrapper>
-      <h1>{quizNum} Quiz</h1>
+      <h1>{quizNum + 1} Quiz</h1>
       <ButtonWrapper>
         <Button onClick={ClickHint1}>1</Button>
         <Button onClick={ClickHint2}>2</Button>
         <Button onClick={ClickHint3}>3</Button>
       </ButtonWrapper>
+      {hint1 && <Hint1 number={quizCount[quizNum]} />}
+      {hint2 && <Hint2 number={quizCount[quizNum]} />}
+      {hint3 && <Hint3 number={quizCount[quizNum]} />}
       <InputContainer>
-        {hint1 && <Hint1 number={quizCount[quizNum]} />}
-        {hint2 && <Hint2 number={quizCount[quizNum]} />}
-        {hint3 && <Hint3 number={quizCount[quizNum]} />}
         <InputLabel>정답</InputLabel>
         <Input
           type={"input"}
@@ -112,6 +126,10 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+`;
+const QuizContainer = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 const InputLabel = styled.label`
