@@ -42,7 +42,6 @@ const Quiz = () => {
       }
 
       //push() - 배열에 마지막에 값추가메서드
-      console.log(quizSeed);
       quizSeed.push(num);
     }
     setQuizCount(quizSeed);
@@ -95,9 +94,11 @@ const Quiz = () => {
         <Button onClick={ClickHint2}>2</Button>
         <Button onClick={ClickHint3}>3</Button>
       </ButtonWrapper>
-      {hint1 && <Hint1 number={quizCount[quizNum]} />}
-      {hint2 && <Hint2 number={quizCount[quizNum]} />}
-      {hint3 && <Hint3 number={quizCount[quizNum]} />}
+      <HintWrapper>
+        {hint1 && <Hint1 number={quizCount[quizNum]} />}
+        {hint2 && <Hint2 number={quizCount[quizNum]} />}
+        {hint3 && <Hint3 number={quizCount[quizNum]} />}
+      </HintWrapper>
       <InputContainer>
         <InputLabel>정답</InputLabel>
         <Input
@@ -155,6 +156,12 @@ const ButtonWrapper = styled.div`
   justify-content: space-evenly;
   margin-top: "10px";
 `;
+const HintWrapper = styled.div`
+  width: 30%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Button = styled.div`
   display: flex;
   -webkit-box-align: center;

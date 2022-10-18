@@ -15,7 +15,6 @@ const User = () => {
 
   const onChangeUser = (e) => {
     setUser(e.target.value.trim());
-    console.log(user, "랭킹이름");
   };
   return (
     <Wrapper>

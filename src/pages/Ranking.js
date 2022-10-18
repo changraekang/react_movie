@@ -11,8 +11,6 @@ const Ranking = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
 
-  console.log(quizidx, "퀴즈번호");
-  console.log(quizans, "퀴즈정답");
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>

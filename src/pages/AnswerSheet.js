@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizAnswer, QuizUser } from "../atom/Atom";
 import styled from "styled-components";
-
 import axios from "axios";
+import Loading from "../components/Loading";
 const AnswerSheet = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
   const [user, setUser] = useRecoilState(QuizUser);
   const [quizanswer, setQuizAnser] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const QuizAnswer = async () => {
       try {
@@ -17,6 +18,7 @@ const AnswerSheet = () => {
           quizidx
         );
         setQuizAnser(res.data);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -32,35 +34,39 @@ const AnswerSheet = () => {
           <QuizAnswer2> 문제</QuizAnswer2>
           <UserAnswer> 답안</UserAnswer>
         </Tabs>
-        <Quizzes>
-          <FlexColumn>
-            {quizanswer.map((row, idx) => (
-              <TradeOdd
-                style={
-                  idx % 2 != 0
-                    ? { backgroundColor: "white" }
-                    : { backgroundColor: "rgb(232, 246, 255)" }
-                }
-              >
-                <No>{idx + 1}</No>
-                <QuizAnswer2>{row.moviequiztitle}</QuizAnswer2>
-              </TradeOdd>
-            ))}
-          </FlexColumn>
-          <FlexColumn2>
-            {quizans.map((row, idx) => (
-              <TradeOdd
-                style={
-                  idx % 2 != 0
-                    ? { backgroundColor: "white" }
-                    : { backgroundColor: "rgb(232, 246, 255)" }
-                }
-              >
-                <UserAnswer>{row}</UserAnswer>
-              </TradeOdd>
-            ))}
-          </FlexColumn2>
-        </Quizzes>
+        {loading ? (
+          <Loading />
+        ) : (
+          <Quizzes>
+            <FlexColumn>
+              {quizanswer.map((row, idx) => (
+                <TradeOdd
+                  style={
+                    idx % 2 != 0
+                      ? { backgroundColor: "white" }
+                      : { backgroundColor: "rgb(232, 246, 255)" }
+                  }
+                >
+                  <No>{idx + 1}</No>
+                  <QuizAnswer2>{row.moviequiztitle.trim()}</QuizAnswer2>
+                </TradeOdd>
+              ))}
+            </FlexColumn>
+            <FlexColumn2>
+              {quizans.map((row, idx) => (
+                <TradeOdd
+                  style={
+                    idx % 2 != 0
+                      ? { backgroundColor: "white" }
+                      : { backgroundColor: "rgb(232, 246, 255)" }
+                  }
+                >
+                  <UserAnswer>{row}</UserAnswer>
+                </TradeOdd>
+              ))}
+            </FlexColumn2>
+          </Quizzes>
+        )}
       </UserAnswerSheet>
     </Flex>
   );
