@@ -38,6 +38,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: "DoHyeon-Regular";
 `;
 
 const Header = styled.div`
@@ -45,6 +46,7 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "DoHyeon-Regular";
 `;
 
 const ButtonGroups = styled.div`

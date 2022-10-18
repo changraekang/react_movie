@@ -10,3 +10,8 @@ body {
   font-family: "Do Hyeon", sans-serif;
   height: 100%;
 }
+
+@font-face {
+  font-family: "DoHyeon-Regular";
+  src: url("./assets/fonts/BMDOHYEON_ttf.ttf");
+}

@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: "DoHyeon-Regular";
 `;
 
 const Header = styled.div`
