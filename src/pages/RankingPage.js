@@ -12,14 +12,17 @@ let month = now.getMonth() + 1; // 월
 const RankingPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [score, setScore] = useRecoilState(Ranking);
+  const [user, setUser] = useRecoilState(QuizUser);
+  const [rankuser, serRankuser] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
+      serRankuser(JSON.parse(user));
       try {
         const res = await axios.get(`https://api.moviequizrae.fun/api/quizs`);
         setPosts(res.data);
         setLoading(false);
-        console.log(posts, "rankin");
         console.log(res, "홈");
       } catch (err) {
         console.log(err);
@@ -34,6 +37,9 @@ const RankingPage = () => {
         <Header>무퀴즈온더블록</Header>
         <Tabs>{month}월의 Ranking</Tabs>
         <Tabs>
+          {rankuser.user}님의 점수:{score}
+        </Tabs>
+        <Tabs>
           <No> No</No>
           <QuizAnswer2> User</QuizAnswer2>
           <UserAnswer> Score</UserAnswer>
@@ -46,7 +52,9 @@ const RankingPage = () => {
               {posts.map((row, idx) => (
                 <TradeOdd
                   style={
-                    idx % 2 != 0
+                    row.idranking == rankuser.userId
+                      ? { backgroundColor: "#FFFFB2", border: "1px solid red" }
+                      : idx % 2 != 0
                       ? { backgroundColor: "white" }
                       : { backgroundColor: "rgb(232, 246, 255)" }
                   }
@@ -147,7 +155,7 @@ const FlexColumn2 = styled.div`
   width: 33%;
 `;
 const Header = styled.div`
-  font-size: 35pt;
+  font-size: 30pt;
   display: flex;
   justify-content: center;
   align-items: center;

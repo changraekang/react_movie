@@ -7,6 +7,8 @@ import Hint1 from "../components/Hint1";
 import Hint2 from "../components/Hint2";
 import Hint3 from "../components/Hint3";
 import { useRecoilState } from "recoil";
+import { isMobile } from "react-device-detect";
+
 const Quiz = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -90,14 +92,15 @@ const Quiz = () => {
     <Wrapper>
       <h1>{quizNum + 1} Quiz</h1>
       <ButtonWrapper>
-        <Button onClick={ClickHint1}>1</Button>
-        <Button onClick={ClickHint2}>2</Button>
-        <Button onClick={ClickHint3}>3</Button>
+        <Hint>Hint</Hint>
+        <Button onClick={ClickHint1}>level1</Button>
+        <Button onClick={ClickHint2}>level2</Button>
+        <Button onClick={ClickHint3}>level3</Button>
       </ButtonWrapper>
       <HintWrapper>
-        {hint1 && <Hint1 number={quizCount[quizNum]} />}
-        {hint2 && <Hint2 number={quizCount[quizNum]} />}
-        {hint3 && <Hint3 number={quizCount[quizNum]} />}
+        {hint1 && <Hint1 number={quizCount[quizNum]} isMobile={isMobile} />}
+        {hint2 && <Hint2 number={quizCount[quizNum]} isMobile={isMobile} />}
+        {hint3 && <Hint3 number={quizCount[quizNum]} isMobile={isMobile} />}
       </HintWrapper>
       <InputContainer>
         <InputLabel>정답</InputLabel>
@@ -159,7 +162,7 @@ const ButtonWrapper = styled.div`
 const HintWrapper = styled.div`
   width: 30%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const Button = styled.div`
@@ -175,4 +178,11 @@ const Button = styled.div`
   cursor: pointer;
   border-radius: 4px;
   word-break: keep-all;
+`;
+const Hint = styled.div`
+  font-size: 10pt;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: "DoHyeon-Regular";
 `;

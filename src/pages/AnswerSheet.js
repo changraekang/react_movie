@@ -53,6 +53,7 @@ const AnswerSheet = () => {
   const submitScore = async () => {
     try {
       const score = await calculateScore();
+      setScore(score);
       let body = {
         user: rankuser.user,
         score: score,

@@ -36,7 +36,7 @@ const User = () => {
   };
   return (
     <Wrapper>
-      <h1>결과보기</h1>
+      <Header>결과보기</Header>
       <Input
         type={"input"}
         placeholder="이름 입력해주세요"
@@ -65,4 +65,12 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const Header = styled.div`
+  font-size: 40pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "DoHyeon-Regular";
 `;
