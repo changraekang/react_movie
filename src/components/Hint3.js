@@ -7,8 +7,8 @@ const Hint3 = ({ number, isMobile }) => {
       <img
         src={`https://static.moviequizrae.fun/level3/${number}.jpg`}
         alt=""
-        width={isMobile ? "350" : "175px"}
-        height={isMobile ? "500" : "25px"}
+        width={isMobile ? "175px" : "350px"}
+        height={isMobile ? "250px" : "500px"}
       />
     </Wrapper>
   );
