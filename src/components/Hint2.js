@@ -7,8 +7,8 @@ const Hint2 = ({ number, isMobile }) => {
       <img
         src={`https://static.moviequizrae.fun/level2/${number}.jpg`}
         alt=""
-        width={500}
-        height={350}
+        width={isMobile ? "350" : "175px"}
+        height={isMobile ? "500" : "25px"}
       />
     </Wrapper>
   );
@@ -16,6 +16,5 @@ const Hint2 = ({ number, isMobile }) => {
 
 export default Hint2;
 const Wrapper = styled.div`
-  width: 100%;
   display: flex;
 `;
