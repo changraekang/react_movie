@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { QuizQuestion, QuizAnswer, QuizUser } from "../atom/Atom";
+import { QuizQuestion, QuizAnswer, QuizUser, Ranking } from "../atom/Atom";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../components/Loading";
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
+
 const AnswerSheet = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
+  const [score, setScore] = useRecoilState(Ranking);
   const [user, setUser] = useRecoilState(QuizUser);
   const [quizanswer, setQuizAnser] = useState([]);
+  const [rankuser, serRankuser] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const QuizAnswer = async () => {
+      serRankuser(JSON.parse(user));
+      let body = {
+        user: rankuser.user,
+        quiz: quizidx,
+        answer: quizans,
+      };
+      console.log("랭킹유저");
       try {
         const res = await axios.post(
-          "https://api.moviequizrae.fun/quizs/answer",
-          quizidx
+          "https://api.moviequizrae.fun/api/quizs/answer",
+          body
         );
         setQuizAnser(res.data);
         setLoading(false);
@@ -25,10 +39,39 @@ const AnswerSheet = () => {
     };
     QuizAnswer();
   }, []);
+  const calculateScore = async () => {
+    let rankScore = 0;
+    for (let i = 0; i < 6; i++) {
+      if (quizanswer[i].moviequiztitle.replace(/ /g, "") === quizans[i]) {
+        rankScore = rankScore + 3;
+      } else {
+      }
+    }
+    return rankScore;
+  };
+
+  const submitScore = async () => {
+    try {
+      const score = await calculateScore();
+      let body = {
+        user: rankuser.user,
+        score: score,
+        id: rankuser.userId,
+      };
+      const res = await axios.post(
+        "https://api.moviequizrae.fun/api/quizs/ranking",
+        body
+      );
+    } catch (err) {
+      console.log(err);
+    }
+
+    navigate("/ranking");
+  };
   return (
     <Flex>
       <UserAnswerSheet>
-        <h1>{user}의 답</h1>
+        <Header>{rankuser.user}의 답</Header>
         <Tabs>
           <No> No</No>
           <QuizAnswer2> 문제</QuizAnswer2>
@@ -48,7 +91,7 @@ const AnswerSheet = () => {
                   }
                 >
                   <No>{idx + 1}</No>
-                  <QuizAnswer2>{row.moviequiztitle.trim()}</QuizAnswer2>
+                  <QuizAnswer2>{row.moviequiztitle}</QuizAnswer2>
                 </TradeOdd>
               ))}
             </FlexColumn>
@@ -61,12 +104,13 @@ const AnswerSheet = () => {
                       : { backgroundColor: "rgb(232, 246, 255)" }
                   }
                 >
-                  <UserAnswer>{row}</UserAnswer>
+                  {row}
                 </TradeOdd>
               ))}
             </FlexColumn2>
           </Quizzes>
         )}
+        <Button onClick={submitScore}>결과제출</Button>
       </UserAnswerSheet>
     </Flex>
   );
@@ -144,4 +188,11 @@ const FlexColumn2 = styled.div`
   display: flex;
   flex-direction: column;
   width: 33%;
+`;
+const Header = styled.div`
+  font-size: 35pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "DoHyeon-Regular";
 `;

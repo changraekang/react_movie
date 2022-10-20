@@ -13,7 +13,7 @@ const Quiz = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
 
-  const [Answer, setAnswer] = useState();
+  const [Answer, setAnswer] = useState("");
   const [quizNum, setQuizNum] = useState(0);
   const [quizNumber, setQuizNumber] = useState(0);
   const [quizCount, setQuizCount] = useState([]);

@@ -1,18 +1,36 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { QuizUser } from "../atom/Atom";
 const User = () => {
-  const [user, setUser] = useRecoilState(QuizUser);
+  const [user, setUser] = useState("");
+  const [rankinguser, setRankingUser] = useRecoilState(QuizUser);
   const navigate = useNavigate();
 
   const onPressInputText = (e) => {
     if (e.key === "Enter") {
-      navigate("/answersheet");
+      handleSubmit();
     }
   };
-
+  const handleSubmit = async () => {
+    try {
+      let body = { user: user };
+      let res = await axios.post(
+        "https://api.moviequizrae.fun/api/quizs/user/ranking",
+        body
+      );
+      let quizuser = {
+        user: user,
+        userId: res.data.insertId,
+      };
+      setRankingUser(JSON.stringify(quizuser));
+      navigate("/answersheet");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onChangeUser = (e) => {
     setUser(e.target.value.trim());
   };
