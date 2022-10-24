@@ -52,15 +52,18 @@ const Quiz = () => {
 
   const onPressInputText = (e) => {
     if (e.key === "Enter") {
-      next();
-      setAnswer("");
-      const answerArray = quizans;
-      setQuizans([...answerArray, Answer]);
+      onClicksubmit();
     }
   };
 
   const onChangeAnswer = (e) => {
     setAnswer(e.target.value.trim());
+  };
+  const onClicksubmit = () => {
+    next();
+      setAnswer("");
+      const answerArray = quizans;
+      setQuizans([...answerArray, Answer]);
   };
   const next = () => {
     if (quizNum < 5) {
@@ -111,6 +114,7 @@ const Quiz = () => {
           value={Answer}
           onKeyPress={onPressInputText}
         />
+      <Button onClick={onClicksubmit}>제출하기</Button>
       </InputContainer>
     </Wrapper>
   );
@@ -156,13 +160,14 @@ const Input = styled.input`
 const ButtonWrapper = styled.div`
   width: 20%;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: ${isMobile ? "column" : "row"};
+  justify-content: ${isMobile ? "center" : "space-evenly"};
   margin-top: "10px";
-`;
+  `;
 const HintWrapper = styled.div`
   width: 30%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 const Button = styled.div`
@@ -178,6 +183,7 @@ const Button = styled.div`
   cursor: pointer;
   border-radius: 4px;
   word-break: keep-all;
+  margin: 5px;
 `;
 const Hint = styled.div`
   font-size: 10pt;

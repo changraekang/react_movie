@@ -10,6 +10,10 @@
   font-family: "DoHyeon-Regular";
   src: url("./assets/fonts/BMDOHYEON_ttf.ttf");
 }
+@font-face {
+  font-family: "HBIOS-SYS";
+  src: url("./assets/fonts/HBIOS-SYS.ttf");
+}
 
 
 .App-logo {

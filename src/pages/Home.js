@@ -47,19 +47,20 @@ const Header = styled.div`
   justify-content: center;
   align-items: center;
   font-family: "DoHyeon-Regular";
-`;
+  `;
 
 const ButtonGroups = styled.div`
   width: 50%;
   margin-top: 10px;
   display: flex;
   justify-content: space-evenly;
-`;
+  `;
 
 const Title = styled.div`
   font-size: 30pt;
   margin-top: 40px;
   font-weight: "bold";
+  font-family: "HBIOS-SYS";
 `;
 
 const LogoImage = styled.div`
