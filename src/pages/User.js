@@ -15,6 +15,7 @@ const User = () => {
     }
   };
   const handleSubmit = async () => {
+    
     try {
       let body = { user: user };
       let res = await axios.post(
@@ -44,6 +45,7 @@ const User = () => {
         value={user}
         onKeyPress={onPressInputText}
       ></Input>
+      <Button onClick={handleSubmit}>제출하기</Button>
     </Wrapper>
   );
 };
@@ -74,3 +76,18 @@ const Header = styled.div`
   align-items: center;
   font-family: "DoHyeon-Regular";
 `;
+  const Button = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 0.3rem 0.875rem;
+    color: white;
+    font-size: 0.875rem;
+    background-color: blue;
+    cursor: pointer;
+    border-radius: 4px;
+    word-break: keep-all;
+    margin: 5px;
+  `;
