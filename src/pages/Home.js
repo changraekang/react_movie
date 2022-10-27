@@ -15,6 +15,9 @@ const Home = () => {
   const handleQuizClickButton = () => {
     navigate("/quiz", { state: "in" });
   };
+  const handleRankingClickButton = () => {
+    navigate("/ranking");
+  };
   const Logo = "http://static.moviequizrae.fun/logo/popcorn.jpeg";
   return (
     <Wrapper>
@@ -25,6 +28,7 @@ const Home = () => {
       </LogoImage>
       <ButtonGroups>
         <Button onClick={handleQuizClickButton}>퀴즈시작</Button>
+        <Button variant="danger" onClick={handleRankingClickButton}>랭킹보기</Button>
       </ButtonGroups>
     </Wrapper>
   );
@@ -50,10 +54,11 @@ const Header = styled.div`
   `;
 
 const ButtonGroups = styled.div`
-  width: 50%;
+  width: 431px;
   margin-top: 10px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  font-family: "DoHyeon-Regular";
   `;
 
 const Title = styled.div`

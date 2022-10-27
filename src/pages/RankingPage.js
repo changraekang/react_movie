@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useSearchParams  } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizAnswer, QuizUser, Ranking } from "../atom/Atom";
 import Loading from "../components/Loading";
@@ -15,10 +15,13 @@ const RankingPage = () => {
   const [score, setScore] = useRecoilState(Ranking);
   const [user, setUser] = useRecoilState(QuizUser);
   const [rankuser, serRankuser] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const userId = searchParams.get('userId');
+  const username = searchParams.get('username');
 
   useEffect(() => {
     const fetchData = async () => {
-      serRankuser(JSON.parse(user));
       try {
         const res = await axios.get(`https://api.moviequizrae.fun/api/quizs`);
         setPosts(res.data);
@@ -37,7 +40,11 @@ const RankingPage = () => {
         <Header>무퀴즈온더블록</Header>
         <Tabs>{month}월의 Ranking</Tabs>
         <Tabs>
-          {rankuser.user}님의 점수:{score}
+          {username ? 
+          <>
+          {username}님의 점수:{score} 
+          </>
+          : null}
         </Tabs>
         <Tabs>
           <No> No</No>
@@ -50,9 +57,9 @@ const RankingPage = () => {
           <Quizzes>
             <FlexColumn>
               {posts.map((row, idx) => (
-                <TradeOdd
+                <TradeOdd key={idx}
                   style={
-                    row.idranking == rankuser.userId
+                    row.idranking == userId
                       ? { backgroundColor: "#FFFFB2", border: "1px solid red" }
                       : idx % 2 != 0
                       ? { backgroundColor: "white" }

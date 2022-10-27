@@ -43,7 +43,7 @@ const AnswerSheet = () => {
     let rankScore = 0;
     for (let i = 0; i < 6; i++) {
       if (quizanswer[i].moviequiztitle.replace(/ /g, "") === quizans[i]) {
-        rankScore = rankScore + 3;
+        rankScore = rankScore + 6;
       } else {
       }
     }
@@ -67,7 +67,7 @@ const AnswerSheet = () => {
       console.log(err);
     }
 
-    navigate("/ranking");
+    navigate(`/ranking?userId=${rankuser.userId}&username=${rankuser.user}`);
   };
   return (
     <Flex>
