@@ -85,7 +85,7 @@ const RankingPage = () => {
         {username ? (
           <ButtonGroups>
             <Button onClick={restart}> 다시풀기</Button>
-            <KakaoShareButton></KakaoShareButton>
+            <KakaoShareButton name={username} data={score}></KakaoShareButton>
           </ButtonGroups>
         ) : (
           <ButtonGroups>

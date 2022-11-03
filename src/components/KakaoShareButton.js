@@ -9,12 +9,13 @@ const KakaoShareButton = () => {
   React.useEffect(() => {
     Kakao.init("706b058dedece1187fba96396b9d2738");
   }, []);
-  const shareKakao = () => {
+  const shareKakao = ({ name, data }) => {
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
-        title: "😼예비집사 판별기 결과😼",
-        description: `예비 집사님이 고양이를 키운다면 가장 잘맞는 고양이는 입니다.`,
+        title: "영덕후능력평가 결과",
+        description: `${name}의 점수는 ${data} 입니다`,
+        imageUrl: "http://static.moviequizrae.fun/logo/popcorn.jpeg",
         link: {
           mobileWebUrl: resultUrl,
           webUrl: resultUrl,
