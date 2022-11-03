@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { isMobile } from "react-device-detect";
+
 import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizAnswer, QuizUser, Ranking } from "../atom/Atom";
 import Loading from "../components/Loading";
@@ -188,7 +190,7 @@ const Header = styled.div`
 `;
 
 const ButtonGroups = styled.div`
-  width: 431px;
+  width: ${isMobile ? "100%" : "431px"};
   margin-top: 10px;
   display: flex;
   justify-content: space-around;
