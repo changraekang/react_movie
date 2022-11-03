@@ -3,13 +3,13 @@ import Button from "react-bootstrap/Button";
 
 const { Kakao } = window;
 
-const KakaoShareButton = () => {
+const KakaoShareButton = ({ name, data }) => {
   const url = "https://moviequizrae.fun";
   const resultUrl = window.location.href;
   React.useEffect(() => {
     Kakao.init("7dd6d528b40979ba800bbad6b5633ea0");
   }, []);
-  const shareKakao = ({ name, data }) => {
+  const shareKakao = () => {
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
