@@ -20,6 +20,7 @@ const RankingPage = () => {
   const [user, setUser] = useRecoilState(QuizUser);
   const [rankuser, serRankuser] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
+  const [quizans, setQuizans] = useRecoilState(QuizAnswer);
 
   const userId = searchParams.get("userId");
   const username = searchParams.get("username");
@@ -27,9 +28,11 @@ const RankingPage = () => {
 
   const restart = () => {
     navigate("/quiz");
+    setQuizans([]);
   };
   const home = () => {
     navigate("/");
+    setQuizans([]);
   };
   useEffect(() => {
     const fetchData = async () => {
