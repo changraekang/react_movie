@@ -1,50 +1,57 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
-import { useNavigate ,useSearchParams  } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizAnswer, QuizUser, Ranking } from "../atom/Atom";
 import Loading from "../components/Loading";
 import axios from "axios";
+import KakaoShareButton from "../components/KakaoShareButton";
 let now = new Date(); // 현재 날짜 및 시간
 let month = now.getMonth() + 1; // 월
-
+let year = now.getFullYear();
 const RankingPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [date, setDate] = useState("");
   const [score, setScore] = useRecoilState(Ranking);
   const [user, setUser] = useRecoilState(QuizUser);
   const [rankuser, serRankuser] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const userId = searchParams.get('userId');
-  const username = searchParams.get('username');
+  const userId = searchParams.get("userId");
+  const username = searchParams.get("username");
+  const navigate = useNavigate();
 
+  const restart = () => {
+    navigate("/quiz");
+  };
+  const home = () => {
+    navigate("/");
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`https://api.moviequizrae.fun/api/quizs`);
         setPosts(res.data);
         setLoading(false);
-        console.log(res, "홈");
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
   }, []);
-
   return (
     <Wrapper>
       <RankingSheet>
         <Header>무퀴즈온더블록</Header>
         <Tabs>{month}월의 Ranking</Tabs>
         <Tabs>
-          {username ? 
-          <>
-          {username}님의 점수:{score} 
-          </>
-          : null}
+          {username ? (
+            <>
+              {username}님의 점수:{score}
+            </>
+          ) : null}
         </Tabs>
         <Tabs>
           <No> No</No>
@@ -57,7 +64,8 @@ const RankingPage = () => {
           <Quizzes>
             <FlexColumn>
               {posts.map((row, idx) => (
-                <TradeOdd key={idx}
+                <TradeOdd
+                  key={idx}
                   style={
                     row.idranking == userId
                       ? { backgroundColor: "#FFFFB2", border: "1px solid red" }
@@ -73,6 +81,16 @@ const RankingPage = () => {
               ))}
             </FlexColumn>
           </Quizzes>
+        )}
+        {username ? (
+          <ButtonGroups>
+            <Button onClick={restart}> 다시풀기</Button>
+            <KakaoShareButton></KakaoShareButton>
+          </ButtonGroups>
+        ) : (
+          <ButtonGroups>
+            <Button onClick={home}> 홈으로 </Button>
+          </ButtonGroups>
         )}
       </RankingSheet>
     </Wrapper>
@@ -166,5 +184,13 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "DoHyeon-Regular";
+`;
+
+const ButtonGroups = styled.div`
+  width: 431px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
   font-family: "DoHyeon-Regular";
 `;
