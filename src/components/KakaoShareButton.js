@@ -7,7 +7,13 @@ const KakaoShareButton = ({ name, data }) => {
   const url = "https://moviequizrae.fun";
   const resultUrl = window.location.href;
   React.useEffect(() => {
-    Kakao.init("7dd6d528b40979ba800bbad6b5633ea0");
+    try {
+      if (!Kakao.isInitialized()) {
+        Kakao.init("7dd6d528b40979ba800bbad6b5633ea0");
+        Kakao.isInitialized();
+      } else {
+      }
+    } catch (e) {}
   }, []);
   const shareKakao = () => {
     Kakao.Link.sendDefault({

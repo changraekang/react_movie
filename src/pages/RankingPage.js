@@ -45,7 +45,7 @@ const RankingPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [posts]);
   return (
     <Wrapper>
       <RankingSheet>
