@@ -1,7 +1,7 @@
 const openDemo = () => {
-    const container = document.querySelector('#demo');
-    console.log(container, "container");
-    container.innerHTML = `
+  const container = document.querySelector("#demo");
+  console.log(container, "container");
+  container.innerHTML = `
     <article style="
         position:fixed;
         z-index: 10;
@@ -57,21 +57,35 @@ const openDemo = () => {
         </button>
         </div>
     </article>
-    `
-    const agreeBtn = document.querySelector('#agreeBtn');
-    let popupWidth = 500;
-    let popupHeight = 500;
+    `;
+  const agreeBtn = document.querySelector("#agreeBtn");
+  let popupWidth = 500;
+  let popupHeight = 500;
 
-    let popupX = (window.screen.width / 2) - (popupWidth / 2);
-    // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+  let popupX = window.screen.width / 2 - popupWidth / 2;
+  // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
 
-    let popupY= (window.screen.height / 2) - (popupHeight / 2);
-    // 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
-    agreeBtn.addEventListener('click',()=> {
-        window.open('http://dev2023.dmpush.kr:8080/', "demo",'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY + ",menubar=no, toolbar=no, resizable=no" );
+  let popupY = window.screen.height / 2 - popupHeight / 2;
+  // 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+  agreeBtn.addEventListener("click", () => {
+    window.open(
+      "http://dev2023.dmpush.kr:8080/?token=22434313-26c8-40cc-9c61-61d53037a772",
+      "demo",
+      "status=no, height=" +
+        popupHeight +
+        ", width=" +
+        popupWidth +
+        ", left=" +
+        popupX +
+        ", top=" +
+        popupY +
+        ",menubar=no, toolbar=no, resizable=no"
+    );
 
-        container.remove();
-    })
-}
+    container.remove();
+  });
+};
 
-setTimeout(() => {openDemo()}, 3000);
+setTimeout(() => {
+  openDemo();
+}, 3000);
