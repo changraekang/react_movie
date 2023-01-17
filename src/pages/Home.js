@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import "../allowDemo.js";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ const Home = () => {
   const Logo = "http://static.moviequizrae.fun/logo/popcorn.jpeg";
   return (
     <Wrapper>
-      <div id="demo"></div>
       <Header>무퀴즈온더블록</Header>
       <Title>영덕후 능력평가</Title>
       <LogoImage>
