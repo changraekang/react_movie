@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-
+import popcorn from "../assets/img/popcorn-1.jpg"; // Corrected import statement
+import popcorn2 from "../assets/img/popcorn-2.jpg"; // Corrected import statement
 const Home = () => {
   const navigate = useNavigate();
 
@@ -18,13 +19,13 @@ const Home = () => {
   const handleRankingClickButton = () => {
     navigate("/ranking");
   };
-  const Logo = "http://static.moviequizrae.fun/logo/popcorn.jpeg";
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>
       <Title>영덕후 능력평가</Title>
       <LogoImage>
-        <img src={Logo} width={350} height={350}></img>
+        <img src={popcorn} alt="Popcorn" width={350} height={350} />{" "}
+        {/* Use the imported image here */}
       </LogoImage>
       <ButtonGroups>
         <Button onClick={handleQuizClickButton}>퀴즈시작</Button>
