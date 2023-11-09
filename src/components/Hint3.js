@@ -5,7 +5,7 @@ const Hint3 = ({ number, isMobile }) => {
   return (
     <Wrapper>
       <img
-        src={`https://static.moviequizrae.fun/level3/${number}.jpg`}
+        src={`https://moviequiz-asset.s3.ap-southeast-2.amazonaws.com/moviequiz/level3/${number}.jpg`}
         alt=""
         width={isMobile ? "175px" : "350px"}
         height={isMobile ? "250px" : "500px"}

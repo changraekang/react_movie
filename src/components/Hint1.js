@@ -5,7 +5,7 @@ const Hint1 = ({ number }) => {
   return (
     <div>
       <ReactAudioPlayer
-        src={`https://static.moviequizrae.fun/level1/${number}.mp3`}
+        src={`https://moviequiz-asset.s3.ap-southeast-2.amazonaws.com/moviequiz/level1/${number}.mp3`}
         autoPlay
         controls
       />
