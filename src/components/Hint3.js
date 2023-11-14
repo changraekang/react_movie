@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import config from "../config";
 
 const Hint3 = ({ number, isMobile }) => {
   return (
     <Wrapper>
       <img
-        src={`https://moviequiz-asset.s3.ap-southeast-2.amazonaws.com/moviequiz/level3/${number}.jpg`}
+        src={`${config.assetsUrl}/level3/${number}.jpg`}
         alt=""
         width={isMobile ? "175px" : "350px"}
         height={isMobile ? "250px" : "500px"}

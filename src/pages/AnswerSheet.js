@@ -6,6 +6,7 @@ import axios from "axios";
 import Loading from "../components/Loading";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import config from "../config";
 
 const AnswerSheet = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
@@ -15,6 +16,7 @@ const AnswerSheet = () => {
   const [quizanswer, setQuizAnser] = useState([]);
   const [rankuser, serRankuser] = useState({});
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,10 +29,7 @@ const AnswerSheet = () => {
       };
       console.log("랭킹유저");
       try {
-        const res = await axios.post(
-          "https://api.moviequizrae.fun/api/quizs/answer",
-          body
-        );
+        const res = await axios.post(`${config.apiUrl}/quizs/answer`, body);
         setQuizAnser(res.data);
         setLoading(false);
       } catch (err) {

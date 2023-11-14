@@ -1,11 +1,11 @@
 import React from "react";
 import ReactAudioPlayer from "react-audio-player";
-
+import config from "../config";
 const Hint1 = ({ number }) => {
   return (
     <div>
       <ReactAudioPlayer
-        src={`https://moviequiz-asset.s3.ap-southeast-2.amazonaws.com/moviequiz/level1/${number}.mp3`}
+        src={`${config.assetsUrl}/level1/${number}.mp3`}
         autoPlay
         controls
       />

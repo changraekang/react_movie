@@ -1,10 +1,11 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+import config from "../config";
 
 const { Kakao } = window;
 
 const KakaoShareButton = ({ name, data }) => {
-  const url = "https://moviequizrae.fun";
+  const url = "https://quiz.movie-hop.com";
   const resultUrl = window.location.href;
   React.useEffect(() => {
     try {
@@ -21,7 +22,7 @@ const KakaoShareButton = ({ name, data }) => {
       content: {
         title: "영덕후능력평가 결과",
         description: `${name}의 점수는 ${data} 입니다`,
-        imageUrl: "http://static.moviequizrae.fun/logo/popcorn.jpeg",
+        imageUrl: `${config.assetsUrl}/logo/popcorn.jpeg`,
         link: {
           mobileWebUrl: resultUrl,
           webUrl: resultUrl,
