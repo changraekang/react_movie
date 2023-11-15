@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Hint1 from "../components/Hint1";
 import Hint2 from "../components/Hint2";
 import Hint3 from "../components/Hint3";
+import config from "../config";
 import { useRecoilState } from "recoil";
 import { isMobile } from "react-device-detect";
 
@@ -26,6 +27,8 @@ const Quiz = () => {
   useEffect(() => {
     //1. 퀴즈갯수는 6개
     let quizSeed = []; //6개로 값이 나열될것이기 때문에 배열처리 - 값은 담지 않음
+    let loadedAudios = 0;
+    const totalImages = quizCount.length; // 3개 레벨의 이미지들
 
     //6번처리 - 반복문
     for (let i = 0; i < 6; i++) {
@@ -46,6 +49,29 @@ const Quiz = () => {
       //push() - 배열에 마지막에 값추가메서드
       quizSeed.push(num);
     }
+
+    // 이미지 프리로딩 로직 캐싱되어 훨씬 빠르게 로딩
+    const imageUrls = quizSeed
+      .map((number) => [
+        `${config.assetsUrl}/level2/${number}.jpg`,
+        `${config.assetsUrl}/level3/${number}.jpg`,
+      ])
+      .flat();
+
+    imageUrls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+    /* 
+    // 오디오 프리로딩
+    const audioUrls = quizSeed.map(
+      (number) => `${config.assetsUrl}/level1/${number}.mp3`
+    );
+    audioUrls.forEach((url) => {
+      const audio = new Audio();
+      audio.src = url;
+    });
+ */
     setQuizCount(quizSeed);
     setQuizidx(quizSeed);
   }, []);
@@ -61,9 +87,9 @@ const Quiz = () => {
   };
   const onClicksubmit = () => {
     next();
-      setAnswer("");
-      const answerArray = quizans;
-      setQuizans([...answerArray, Answer]);
+    setAnswer("");
+    const answerArray = quizans;
+    setQuizans([...answerArray, Answer]);
   };
   const next = () => {
     if (quizNum < 5) {
@@ -114,7 +140,7 @@ const Quiz = () => {
           value={Answer}
           onKeyPress={onPressInputText}
         />
-      <Button onClick={onClicksubmit}>제출하기</Button>
+        <Button onClick={onClicksubmit}>제출하기</Button>
       </InputContainer>
     </Wrapper>
   );
@@ -163,7 +189,7 @@ const ButtonWrapper = styled.div`
   flex-direction: ${isMobile ? "column" : "row"};
   justify-content: ${isMobile ? "center" : "space-evenly"};
   margin-top: "10px";
-  `;
+`;
 const HintWrapper = styled.div`
   width: 30%;
   display: flex;
