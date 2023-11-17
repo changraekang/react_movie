@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from "styled-components";
 
-const QuizSample = () => {
+const QuizSample = ( { checkAllLoaded, setIsLoading}) => {
+
+  const handleConfirmClick = () => {
+    setIsLoading(false);
+  };
     return (
         <Wrapper>
             Sample
+            <Button onClick={handleConfirmClick} disabled={!checkAllLoaded}  >확인</Button>
         </Wrapper>
     );
 };

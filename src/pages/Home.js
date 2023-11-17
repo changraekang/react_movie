@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,10 @@ const Home = () => {
   const handleRankingClickButton = () => {
     navigate("/ranking");
   };
+useEffect(() => {
+  localStorage.removeItem('quizSeed');
+}, [])
+
   return (
     <Wrapper>
       <Header>무퀴즈온더블록</Header>
@@ -41,16 +45,19 @@ export default Home;
 const Wrapper = styled.div`
   height: 100vh;
   width: 100%;
+  overflow: hidden; // 스크롤을 숨깁니다.
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   font-family: "DoHyeon-Regular";
   
-  @media (max-width: 600px) { // 핸드폰 화면 크기에 따른 조정
+  @media (max-width: 600px) {
     width: 100%;
     height: auto;
-    padding: 20px;
+  }
+  > :first-child {
+    margin-top: 80px; // 첫 번째 자식 요소의 상단 마진을 50px로 설정
   }
 `;
 

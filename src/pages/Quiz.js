@@ -31,30 +31,29 @@ const Quiz = () => {
 
   useEffect(() => {
     //1. 퀴즈갯수는 6개
-    let quizSeed = []; //6개로 값이 나열될것이기 때문에 배열처리 - 값은 담지 않음
+    let quizSeed;
     let loadedAudios = 0;
-    const totalImages = quizCount.length; // 3개 레벨의 이미지들
-    setQuizCount([]);
-    setQuizidx([]);
-    //6번처리 - 반복문
-    for (let i = 0; i < 7; i++) {
-      //새로 추가될 숫자 : 1~186사이의 숫자가 랜덤하게 처리
-      //random() : 0~1사이의 랜덤한 소수
-      //floor() : 내림처리해서 정수로 변경
-      let num = Math.floor(Math.random() * 160) + 1;
 
-      //현재 상태는 같은 숫자가 나올수 있음
-      //lotto라는 배열에 담긴 숫자와 같이 같으면 안됨
-      for (let j in quizSeed) {
-        if (num === quizSeed[j]) {
-          //현재 새로나온 숫자가 기존 숫자와 같으면
+    const storedQuizSeed = localStorage.getItem('quizSeed');
+    if (storedQuizSeed) {
+      // 로컬 스토리지에 저장된 퀴즈 숫자들이 있으면, 이를 사용합니다.
+      quizSeed = JSON.parse(storedQuizSeed);
+    } else {
+      // 저장된 퀴즈 숫자들이 없으면, 새로 생성합니다.
+      quizSeed = [];
+      for (let i = 0; i < 7; i++) {
+        let num;
+        do {
           num = Math.floor(Math.random() * 160) + 1;
-        }
+        } while (quizSeed.includes(num)); // 이미 생성된 숫자인지 확인합니다.
+        quizSeed.push(num);
       }
-
-      //push() - 배열에 마지막에 값추가메서드
-      quizSeed.push(num);
+      // 새로 생성된 퀴즈 숫자들을 로컬 스토리지에 저장합니다.
+      localStorage.setItem('quizSeed', JSON.stringify(quizSeed));
     }
+  
+    setQuizCount(quizSeed);
+    setQuizidx(quizSeed);
 
     // 이미지 프리로딩 로직 캐싱되어 훨씬 빠르게 로딩
     const imageUrls = quizSeed
@@ -106,7 +105,7 @@ const Quiz = () => {
     setQuizans([...answerArray, Answer]);
   };
   const next = () => {
-    if (quizNum < 5) {
+    if (quizNum < 6) {
       setQuizNum(quizNum + 1);
       setAnswer("");
       sethint1(true);
@@ -133,17 +132,18 @@ const Quiz = () => {
   };
 
   // 로딩 모달 컴포넌트
-  const LoadingModal = () => (
+  const LoadingModal = ({ isLoading, setIsLoading , checkAllLoaded}) => (
+
     <LoadingModalWrapper>
-      <h1 style={{color:'white'}}>Quiz 생성 중... ({loadedAudios}/7)</h1>
-      <QuizSample />
+      <h1 style={{color:'white'}}>Quiz 생성 중... </h1>
+      <QuizSample isLoading={isLoading} setIsLoading={setIsLoading} checkAllLoaded={checkAllLoaded} />
     </LoadingModalWrapper>
   );
 
 
   return (
     <Wrapper>
-       {isLoading && <LoadingModal />}
+       {isLoading && <LoadingModal isLoading={isLoading} setIsLoading={setIsLoading} />}
       <h1>{quizNum + 1} Quiz</h1>
       <ButtonWrapper>
         <Hint>Points: {}</Hint>
@@ -152,7 +152,7 @@ const Quiz = () => {
         <Button onClick={ClickHint3}>level3</Button> 포스터
       </ButtonWrapper>
       <HintWrapper>
-        {hint1 && <Hint1 number={quizCount[quizNum]} isMobile={isMobile}  isLoading={!isLoading} />}
+        {hint1 &&!isLoading && <Hint1 number={quizCount[quizNum]} isMobile={isMobile}  isLoading={isLoading} />}
         {hint2 && <Hint2 number={quizCount[quizNum]} isMobile={isMobile} />}
         {hint3 && <Hint3 number={quizCount[quizNum]} isMobile={isMobile} />}
       </HintWrapper>
@@ -217,8 +217,8 @@ const ButtonWrapper = styled.div`
   margin-top: "10px";
 `;
 const HintWrapper = styled.div`
-  width: 30%; 
-  height: 300px; // 높이를 200px로 고정
+  width: 60%; 
+  height: 400px; // 높이를 200px로 고정
   display: flex;
   justify-content: center;
   align-items: center; // 내용을 중앙에 위치시킵니다.
