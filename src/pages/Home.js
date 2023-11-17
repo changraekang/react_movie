@@ -112,7 +112,7 @@ const Home = () => {
 
 export default Home;
 const Wrapper = styled.div`
-  min-height: 100vh;
+  min-height: 80vh;
   width: 100%;
   overflow: hidden; // 스크롤을 숨깁니다.
   display: flex;
