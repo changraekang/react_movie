@@ -99,7 +99,6 @@ const Home = () => {
       <Title>영덕후 능력평가</Title>
       <LogoImage>
         <img src={popcorn} alt="Popcorn" width={350} height={350} />{" "}
-        {/* Use the imported image here */}
       </LogoImage>
       <ButtonGroups>
         <Button onClick={handleQuizClickButton}>퀴즈시작</Button>
@@ -113,7 +112,7 @@ const Home = () => {
 
 export default Home;
 const Wrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   overflow: hidden; // 스크롤을 숨깁니다.
   display: flex;
@@ -123,7 +122,6 @@ const Wrapper = styled.div`
   font-family: "DoHyeon-Regular";
 
   @media (max-width: 600px) {
-    min-height: 100vh;
     width: 100%;
     overflow: hidden;
   }
