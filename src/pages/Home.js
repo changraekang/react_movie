@@ -125,9 +125,6 @@ const Wrapper = styled.div`
     width: 100%;
     overflow: hidden;
   }
-  > :first-child {
-    margin-top: 80px; // 첫 번째 자식 요소의 상단 마진을 50px로 설정
-  }
 `;
 
 const Header = styled.div`
@@ -159,7 +156,7 @@ const LogoImage = styled.div`
 const LoadingModalWrapper = styled.div`
   position: fixed;
   flex-direction: column;
-  top: 0;
+  top: 20;
   left: 0;
   width: 100%;
   height: 100%;
