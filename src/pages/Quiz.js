@@ -9,6 +9,7 @@ import Hint3 from "../components/Hint3";
 import config from "../config";
 import { useRecoilState } from "recoil";
 import { isMobile } from "react-device-detect";
+import QuizSample from "./QuizSample";
 
 const Quiz = () => {
   const { state } = useLocation();
@@ -24,14 +25,19 @@ const Quiz = () => {
   const [hint2, sethint2] = useState(false);
   const [hint3, sethint3] = useState(false);
   const [UserInput, setUserInput] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedAudios, setLoadedAudios] = useState(0);
+
+
   useEffect(() => {
     //1. 퀴즈갯수는 6개
     let quizSeed = []; //6개로 값이 나열될것이기 때문에 배열처리 - 값은 담지 않음
     let loadedAudios = 0;
     const totalImages = quizCount.length; // 3개 레벨의 이미지들
-
+    setQuizCount([]);
+    setQuizidx([]);
     //6번처리 - 반복문
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       //새로 추가될 숫자 : 1~186사이의 숫자가 랜덤하게 처리
       //random() : 0~1사이의 랜덤한 소수
       //floor() : 내림처리해서 정수로 변경
@@ -62,18 +68,26 @@ const Quiz = () => {
       const img = new Image();
       img.src = url;
     });
-    /* 
-    // 오디오 프리로딩
     const audioUrls = quizSeed.map(
       (number) => `${config.assetsUrl}/level1/${number}.mp3`
     );
-    audioUrls.forEach((url) => {
-      const audio = new Audio();
-      audio.src = url;
-    });
- */
     setQuizCount(quizSeed);
     setQuizidx(quizSeed);
+
+    audioUrls.forEach((url, index) => {
+      const audio = new Audio();
+      audio.src = url;
+      audio.onloadeddata = () => {
+        setLoadedAudios((prevCount) => prevCount + 1); // 로딩된 파일 수 업데이트
+      };
+    });
+
+    const checkAllLoaded = setInterval(() => {
+      if (loadedAudios === audioUrls.length) {
+        clearInterval(checkAllLoaded);
+      }
+    }, 100);
+    return () => clearInterval(checkAllLoaded);
   }, []);
 
   const onPressInputText = (e) => {
@@ -117,17 +131,28 @@ const Quiz = () => {
     sethint2(false);
     sethint3(true);
   };
+
+  // 로딩 모달 컴포넌트
+  const LoadingModal = () => (
+    <LoadingModalWrapper>
+      <h1 style={{color:'white'}}>Quiz 생성 중... ({loadedAudios}/7)</h1>
+      <QuizSample />
+    </LoadingModalWrapper>
+  );
+
+
   return (
     <Wrapper>
+       {isLoading && <LoadingModal />}
       <h1>{quizNum + 1} Quiz</h1>
       <ButtonWrapper>
-        <Hint>Hint</Hint>
+        <Hint>Points: {}</Hint>
         <Button onClick={ClickHint1}>level1</Button>
-        <Button onClick={ClickHint2}>level2</Button>
-        <Button onClick={ClickHint3}>level3</Button>
+        <Button onClick={ClickHint2}>level2 </Button> 
+        <Button onClick={ClickHint3}>level3</Button> 포스터
       </ButtonWrapper>
       <HintWrapper>
-        {hint1 && <Hint1 number={quizCount[quizNum]} isMobile={isMobile} />}
+        {hint1 && <Hint1 number={quizCount[quizNum]} isMobile={isMobile}  isLoading={!isLoading} />}
         {hint2 && <Hint2 number={quizCount[quizNum]} isMobile={isMobile} />}
         {hint3 && <Hint3 number={quizCount[quizNum]} isMobile={isMobile} />}
       </HintWrapper>
@@ -171,6 +196,7 @@ const InputLabel = styled.label`
   color: "black";
   margin: 0px;
   font-weight: bold;
+  font-family: "DoHyeon-Regular";
 `;
 
 const Input = styled.input`
@@ -191,9 +217,11 @@ const ButtonWrapper = styled.div`
   margin-top: "10px";
 `;
 const HintWrapper = styled.div`
-  width: 30%;
+  width: 30%; 
+  height: 300px; // 높이를 200px로 고정
   display: flex;
   justify-content: center;
+  align-items: center; // 내용을 중앙에 위치시킵니다.
 `;
 
 const Button = styled.div`
@@ -210,6 +238,8 @@ const Button = styled.div`
   border-radius: 4px;
   word-break: keep-all;
   margin: 5px;
+  font-family: "DoHyeon-Regular";
+
 `;
 const Hint = styled.div`
   font-size: 10pt;
@@ -217,4 +247,24 @@ const Hint = styled.div`
   justify-content: flex-end;
   align-items: center;
   font-family: "DoHyeon-Regular";
+`;
+
+const LoadingModalWrapper = styled.div`
+  position: fixed;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const LoadingText = styled.div`
+  color: white;
+  font-size: 15px;
+  font-family: "HBIOS-SYS";
 `;

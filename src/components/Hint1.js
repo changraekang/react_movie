@@ -1,12 +1,12 @@
 import React from "react";
 import ReactAudioPlayer from "react-audio-player";
 import config from "../config";
-const Hint1 = ({ number }) => {
+const Hint1 = ({ number , isLoading = false}) => {
   return (
     <div>
       <ReactAudioPlayer
         src={`${config.assetsUrl}/level1/${number}.mp3`}
-        autoPlay
+        autoPlay = {isLoading}
         controls
       />
     </div>

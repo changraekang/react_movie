@@ -46,10 +46,16 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   font-family: "DoHyeon-Regular";
+  
+  @media (max-width: 600px) { // 핸드폰 화면 크기에 따른 조정
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
 `;
 
 const Header = styled.div`
-  font-size: 40pt;
+  font-size: 38pt;
   display: flex;
   justify-content: center;
   align-items: center;
