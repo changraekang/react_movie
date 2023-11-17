@@ -1,17 +1,22 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const QuizSample = ( { checkAllLoaded, setIsLoading}) => {
+const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
+  const navigate = useNavigate();
 
   const handleConfirmClick = () => {
     setIsLoading(false);
+    navigate("/quiz/1", { state: "in" });
   };
-    return (
-        <Wrapper>
-            Sample
-            <Button onClick={handleConfirmClick} disabled={!checkAllLoaded}  >확인</Button>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      Sample
+      <Button onClick={handleConfirmClick} disabled={!checkAllLoaded}>
+        확인
+      </Button>
+    </Wrapper>
+  );
 };
 
 export default QuizSample;
@@ -25,7 +30,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   background-color: white;
   z-index: 1001;
-
 `;
 
 const InputContainer = styled.div`
@@ -60,7 +64,7 @@ const Input = styled.input`
 const ButtonWrapper = styled.div`
   width: 14%; // 너비를 70%로 조정
   display: flex;
-  flex-direction: "column" ;
+  flex-direction: "column";
   justify-content: "center";
   margin-top: 7px; // 여백을 70%로 조정
 `;
