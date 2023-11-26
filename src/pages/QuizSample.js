@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { QuizQuestion, QuizTitleLength } from "../atom/Atom";
+import config from "../config";
 
 const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const navigate = useNavigate();
+  const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
+  const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false); // 버튼 활성화 상태
+
+  useEffect(() => {
+    // 서버로부터 값의 길이를 받아오는 함수
+    const fetchQuizLength = async () => {
+      try {
+        const response = await fetch(`${config.apiUrl}/quizs/hint`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ quizidx }), // quizidx 배열을 JSON 형식으로 변환하여 전송
+        });
+        const data = await response.json();
+        // 데이터의 길이에 따라 버튼 활성화 상태 결정
+        setQuizTitlelength(data);
+        if (data.length > 0) {
+          setIsButtonEnabled(true);
+        }
+      } catch (error) {
+        console.error("Error fetching quiz length:", error);
+      }
+    };
+
+    fetchQuizLength();
+
+    return () => {};
+  }, []);
 
   const handleConfirmClick = () => {
     setIsLoading(false);
@@ -12,7 +45,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   return (
     <Wrapper>
       Sample
-      <Button onClick={handleConfirmClick} disabled={!checkAllLoaded}>
+      <Button onClick={handleConfirmClick} disabled={!isButtonEnabled}>
         확인
       </Button>
     </Wrapper>

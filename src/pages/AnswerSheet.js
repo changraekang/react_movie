@@ -27,7 +27,6 @@ const AnswerSheet = () => {
         quiz: quizidx,
         answer: quizans,
       };
-      console.log("랭킹유저");
       try {
         const res = await axios.post(`${config.apiUrl}/quizs/answer`, body);
         setQuizAnser(res.data);
