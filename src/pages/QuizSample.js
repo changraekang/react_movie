@@ -145,7 +145,7 @@ const ButtonWrapper = styled.div`
   width: 14%; // 너비를 70%로 조정
   display: flex;
   flex-direction: row;
-  justify-content: "center";
+  justify-content: center;
   margin-top: 7px; // 여백을 70%로 조정
 `;
 
