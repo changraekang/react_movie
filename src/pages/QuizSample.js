@@ -4,13 +4,46 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizTitleLength } from "../atom/Atom";
 import config from "../config";
+import ReactAudioPlayer from "react-audio-player";
+import hintL1 from "../assets/sample/hint1.mp3";
+import hintL2 from "../assets/sample/hint2.jpg";
+import hintL3 from "../assets/sample/hint3.jpg";
 
 const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const navigate = useNavigate();
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // 버튼 활성화 상태
+  const [hint1, setHint1] = useState(true);
+  const [hint2, setHint2] = useState(false);
+  const [hint3, setHint3] = useState(false);
+  const onClickHint = (hintNumber) => {
+    setHint1(hintNumber === 1);
+    setHint2(hintNumber === 2);
+    setHint3(hintNumber === 3);
+  };
 
+  const Hint1 = () => {
+    return (
+      <div>
+        <ReactAudioPlayer src={hintL1} autoPlay controls />
+      </div>
+    );
+  };
+  const Hint2 = () => {
+    return (
+      <div style={{ display: "flex" }}>
+        <img src={hintL2} alt="" width={"250px"} height={"175px"} />
+      </div>
+    );
+  };
+  const Hint3 = () => {
+    return (
+      <div style={{ display: "flex" }}>
+        <img src={hintL3} alt="" width={"250px"} height={"175px"} />
+      </div>
+    );
+  };
   useEffect(() => {
     // 서버로부터 값의 길이를 받아오는 함수
     const fetchQuizLength = async () => {
@@ -37,7 +70,12 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
 
     return () => {};
   }, []);
-
+  const renderHintComponent = () => {
+    if (hint1) return <Hint1 />;
+    if (hint2) return <Hint2 />;
+    if (hint3) return <Hint3 />;
+    return null;
+  };
   const handleConfirmClick = () => {
     setIsLoading(false);
     navigate("/quiz/1", { state: "in" });
@@ -45,8 +83,14 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   return (
     <Wrapper>
       Sample
+      <ButtonWrapper>
+        <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
+        <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
+        <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
+      </ButtonWrapper>
+      {renderHintComponent()}
       <Button onClick={handleConfirmClick} disabled={!isButtonEnabled}>
-        확인
+        퀴즈풀러가기!!
       </Button>
     </Wrapper>
   );
@@ -63,6 +107,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   background-color: white;
   z-index: 1001;
+`;
+const HintWrapper2 = styled.div`
+  display: flex;
 `;
 
 const InputContainer = styled.div`
@@ -97,7 +144,7 @@ const Input = styled.input`
 const ButtonWrapper = styled.div`
   width: 14%; // 너비를 70%로 조정
   display: flex;
-  flex-direction: "column";
+  flex-direction: row;
   justify-content: "center";
   margin-top: 7px; // 여백을 70%로 조정
 `;

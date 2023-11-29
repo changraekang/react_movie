@@ -8,8 +8,8 @@ const Hint2 = ({ number, isMobile }) => {
       <img
         src={`${config.assetsUrl}/level2/${number}.jpg`}
         alt=""
-        width={isMobile ? "250px" : "500px"}
-        height={isMobile ? "175px" : "350px"}
+        width={"250px"}
+        height={"175px"}
       />
     </Wrapper>
   );

@@ -82,7 +82,6 @@ const Home = () => {
   // 로딩 모달 컴포넌트
   const LoadingModal = ({ isLoading, setIsLoading, checkAllLoaded }) => (
     <LoadingModalWrapper>
-      <h1 style={{ color: "white" }}>Quiz 생성 중... </h1>
       <QuizSample
         isLoading={isLoading}
         setIsLoading={setIsLoading}
