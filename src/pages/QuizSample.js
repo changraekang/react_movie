@@ -26,7 +26,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const Hint1 = () => {
     return (
       <div>
-        <ReactAudioPlayer src={hintL1} autoPlay controls />
+        <ReactAudioPlayer src={{ hintL1 }} autoPlay controls />
       </div>
     );
   };
