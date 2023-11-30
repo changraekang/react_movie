@@ -26,7 +26,11 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const Hint1 = () => {
     return (
       <div>
-        <ReactAudioPlayer src={{ hintL1 }} autoPlay controls />
+        <ReactAudioPlayer
+          src={`${config.assetsUrl}/level1/16.mp3`}
+          autoPlay
+          controls
+        />
       </div>
     );
   };
@@ -40,7 +44,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const Hint3 = () => {
     return (
       <div style={{ display: "flex" }}>
-        <img src={hintL3} alt="" width={"250px"} height={"175px"} />
+        <img src={hintL3} alt="" width={"175px"} height={"250px"} />
       </div>
     );
   };
@@ -81,18 +85,34 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
     navigate("/quiz/1", { state: "in" });
   };
   return (
-    <Wrapper>
-      Sample
-      <ButtonWrapper>
-        <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
-        <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
-        <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
-      </ButtonWrapper>
-      {renderHintComponent()}
-      <Button onClick={handleConfirmClick} disabled={!isButtonEnabled}>
-        퀴즈풀러가기!!
-      </Button>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Container>
+          <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
+          <Description>
+            이 힌트는 기본힌트입니다.<br></br>
+            해당 영화나 TV 프로그램의 유명한 대사나 오리지널 사운드트랙에 관한
+            정보를 얻을 수 있습니다.
+          </Description>
+
+          <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
+          <Description>
+            이 힌트는 영화나 TV 프로그램의 명장면입니다. <br></br>
+            사용 시 3점이 감점됩니다.
+          </Description>
+
+          <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
+          <Description>
+            이 힌트는 해당 영화나 TV 프로그램의 포스터를 제공합니다. <br></br>
+            사용 시 3점이 감점됩니다.
+          </Description>
+        </Container>
+        <HintWrapper>{renderHintComponent()}</HintWrapper>
+        <Button onClick={handleConfirmClick} disabled={!isButtonEnabled}>
+          퀴즈풀러가기!!
+        </Button>
+      </Wrapper>
+    </>
   );
 };
 
@@ -100,7 +120,9 @@ export default QuizSample;
 
 const Wrapper = styled.div`
   height: 70vh; // 높이를 70%로 조정
-  width: 85%; // 너비를 70%로 조정
+  width: 100%; // 너비를 70%로 조정
+  padding-top: "50px";
+  padding-bottom: "50px";
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,7 +152,12 @@ const InputLabel = styled.label`
   font-weight: bold;
   font-family: "DoHyeon-Regular";
 `;
-
+const Description = styled.p`
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "DoHyeon-Regular";
+`;
 const Input = styled.input`
   margin-top: 7px; // 여백을 70%로 조정
   font-size: 8.4px; // 폰트 크기를 70%로 조정
@@ -152,6 +179,7 @@ const ButtonWrapper = styled.div`
 const HintWrapper = styled.div`
   width: 21%; // 너비를 70%로 조정
   height: 210px; // 높이를 70%로 조정
+  padding-top: 15;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,4 +206,7 @@ const Hint = styled.div`
   justify-content: flex-end;
   align-items: center;
   font-family: "DoHyeon-Regular";
+`;
+const Container = styled.div`
+  margin: 10px;
 `;

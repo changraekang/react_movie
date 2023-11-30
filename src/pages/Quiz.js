@@ -12,6 +12,7 @@ import Hint1 from "../components/Hint1";
 import Hint2 from "../components/Hint2";
 import Hint3 from "../components/Hint3";
 import styled from "styled-components";
+import config from "../config";
 
 const Quiz = () => {
   const navigate = useNavigate();
