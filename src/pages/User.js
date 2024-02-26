@@ -19,17 +19,7 @@ const User = () => {
   };
   const handleSubmit = async () => {
     try {
-      let body = { user: user };
-      let res = await axios.post(
-        "https://api.moviequizrae.fun/api/quizs/user/ranking",
-        body
-      );
-      let quizuser = {
-        user: user,
-        userId: res.data.insertId,
-      };
-      setRankingUser(JSON.stringify(quizuser));
-      navigate("/answersheet");
+      navigate(`/answersheet?username=${user}`);
     } catch (err) {
       console.log(err);
     }

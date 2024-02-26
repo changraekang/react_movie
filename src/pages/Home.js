@@ -36,7 +36,7 @@ const Home = () => {
     } else {
       // 저장된 퀴즈 숫자들이 없으면, 새로 생성합니다.
       quizSeed = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 6; i++) {
         let num;
         do {
           num = Math.floor(Math.random() * 160) + 1;
@@ -101,9 +101,6 @@ const Home = () => {
       </LogoImage>
       <ButtonGroups>
         <Button onClick={handleQuizClickButton}>퀴즈시작</Button>
-        <Button variant="danger" onClick={handleRankingClickButton}>
-          랭킹보기
-        </Button>
       </ButtonGroups>
     </Wrapper>
   );

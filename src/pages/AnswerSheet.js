@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { QuizQuestion, QuizAnswer, QuizUser, Ranking } from "../atom/Atom";
+import {
+  QuizQuestion,
+  QuizAnswer,
+  QuizUser,
+  Ranking,
+  QuizTitleLength,
+} from "../atom/Atom";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../components/Loading";
@@ -13,37 +19,26 @@ const AnswerSheet = () => {
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
   const [score, setScore] = useRecoilState(Ranking);
   const [user, setUser] = useRecoilState(QuizUser);
-  const [quizanswer, setQuizAnser] = useState([]);
+  const [quizanswer, setQuizAnswer] = useState([]);
   const [rankuser, serRankuser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
 
   const navigate = useNavigate();
-
   useEffect(() => {
-    const QuizAnswer = async () => {
-      serRankuser(JSON.parse(user));
-      let body = {
-        user: rankuser.user,
-        quiz: quizidx,
-        answer: quizans,
-      };
-      try {
-        const res = await axios.post(`${config.apiUrl}/quizs/answer`, body);
-        setQuizAnser(res.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
+    for (let i = 0; i < 6; i++) {
+      console.log(quiztitlelength[i].answer);
+    }
+    console.log("quiztitlelength ::", quiztitlelength);
+    return () => {
+      calculateScore();
     };
-    QuizAnswer();
   }, []);
+
   const calculateScore = async () => {
     let rankScore = 0;
     for (let i = 0; i < 6; i++) {
-      if (quizanswer[i].moviequiztitle.replace(/ /g, "") === quizans[i]) {
-        rankScore = rankScore + 6;
-      } else {
-      }
+      console.log(quiztitlelength[i].answer);
     }
     return rankScore;
   };
@@ -57,10 +52,6 @@ const AnswerSheet = () => {
         score: score,
         id: rankuser.userId,
       };
-      const res = await axios.post(
-        "https://api.moviequizrae.fun/api/quizs/ranking",
-        body
-      );
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +72,7 @@ const AnswerSheet = () => {
         ) : (
           <Quizzes>
             <FlexColumn>
-              {quizanswer.map((row, idx) => (
+              {quiztitlelength.map((row, idx) => (
                 <TradeOdd
                   style={
                     idx % 2 != 0
@@ -90,7 +81,7 @@ const AnswerSheet = () => {
                   }
                 >
                   <No>{idx + 1}</No>
-                  <QuizAnswer2>{row.moviequiztitle}</QuizAnswer2>
+                  <QuizAnswer2>{quiztitlelength.answer}</QuizAnswer2>
                 </TradeOdd>
               ))}
             </FlexColumn>

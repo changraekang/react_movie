@@ -52,7 +52,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
     // 서버로부터 값의 길이를 받아오는 함수
     const fetchQuizLength = async () => {
       try {
-        const response = await fetch(`${config.apiUrl}/quizs/hint`, {
+        const response = await fetch(`${config.devApiUrl}/quizs/hint`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

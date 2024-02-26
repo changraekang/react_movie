@@ -27,7 +27,7 @@ const Quiz = () => {
   const [hint1, setHint1] = useState(true);
   const [hint2, setHint2] = useState(false);
   const [hint3, setHint3] = useState(false);
-  const hintString = "O".repeat(quiztitlelength[quizNum - 1]);
+  const hintString = "O".repeat(quiztitlelength[quizNum - 1].length);
   useEffect(() => {
     console.log(quizHintUsed, ":: QuizHintUsed");
   }, [quizidx.length, quizHintUsed, setQuizHintUsed]);
