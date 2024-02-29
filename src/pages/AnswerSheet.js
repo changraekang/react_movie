@@ -24,6 +24,37 @@ const AnswerSheet = () => {
   const [loading, setLoading] = useState(true);
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
 
+  // Antd 요소
+  const columns = [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "퀴즈",
+      dataIndex: "quiz",
+      key: "quiz",
+    },
+    {
+      title: "사용자정답",
+      dataIndex: "userAnswer",
+      key: "userAnswer",
+    },
+    {
+      title: "힌트사용",
+      dataIndex: "hintUsed",
+      key: "hintUsed",
+    },
+    {
+      title: "점수",
+      dataIndex: "score",
+      key: "score",
+    },
+  ];
+
+  // 데이터 구성
+  const data = [];
   const navigate = useNavigate();
   useEffect(() => {
     for (let i = 0; i < 6; i++) {

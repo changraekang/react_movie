@@ -48,40 +48,36 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
       </div>
     );
   };
-  useEffect(() => {
-    // 서버로부터 값의 길이를 받아오는 함수
-    const fetchQuizLength = async () => {
-      try {
-        const response = await fetch(`${config.apiUrl}/quizs/hint`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ quizidx }), // quizidx 배열을 JSON 형식으로 변환하여 전송
-        });
-        const data = await response.json();
-        // 데이터의 길이에 따라 버튼 활성화 상태 결정
-        setQuizTitlelength(data);
-        if (data.length > 0) {
-          setIsButtonEnabled(true);
-        }
-      } catch (error) {
-        console.error("Error fetching quiz length:", error);
+
+  const fetchQuizLength = async () => {
+    try {
+      const response = await fetch(`${config.apiUrl}/quizs/hint`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quizidx }), // quizidx 배열을 JSON 형식으로 변환하여 전송
+      });
+      const data = await response.json();
+      // 데이터의 길이에 따라 버튼 활성화 상태 결정
+      setQuizTitlelength(data);
+      if (data.length > 0) {
+        setIsButtonEnabled(true);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching quiz length:", error);
+    }
+  };
 
-    fetchQuizLength();
-
-    return () => {};
-  }, []);
   const renderHintComponent = () => {
     if (hint1) return <Hint1 />;
     if (hint2) return <Hint2 />;
     if (hint3) return <Hint3 />;
     return null;
   };
-  const handleConfirmClick = () => {
+  const handleConfirmClick = async () => {
     setIsLoading(false);
+    await fetchQuizLength();
     navigate("/quiz/1", { state: "in" });
   };
   return (
