@@ -5,7 +5,6 @@ import { useRecoilState } from "recoil";
 import { QuizQuestion, QuizTitleLength } from "../atom/Atom";
 import config from "../config";
 import ReactAudioPlayer from "react-audio-player";
-import hintL1 from "../assets/sample/hint1.mp3";
 import hintL2 from "../assets/sample/hint2.jpg";
 import hintL3 from "../assets/sample/hint3.jpg";
 
@@ -27,13 +26,13 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
     return (
       <div>
         <ReactAudioPlayer
-          src={`${config.assetsUrl}/level1/16.mp3`}
-          autoPlay
+          src={`${config.assetsUrl}/level1/서울의봄.mp3`}
           controls
         />
       </div>
     );
   };
+
   const Hint2 = () => {
     return (
       <div style={{ display: "flex" }}>
