@@ -77,16 +77,25 @@ const Quiz = () => {
 
   return (
     <Wrapper>
-      <h1>{quizNum} Quiz</h1>
-      <ButtonWrapper>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          width: "100%",
+        }}
+      >
+        <Title>{quizNum} Quiz</Title>
         <Hint>Points: {}</Hint>
+      </div>
+      <ButtonWrapper>
         <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
         <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
         <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
       </ButtonWrapper>
 
       <Hint>정답: {hintString}</Hint>
-      <HintWrapper>{renderHintComponent()}</HintWrapper>
       <InputContainer>
         <InputLabel>정답</InputLabel>
         <Input
@@ -98,6 +107,7 @@ const Quiz = () => {
         />
         <Button onClick={onClickSubmit}>제출하기</Button>
       </InputContainer>
+      <HintWrapper>{renderHintComponent()}</HintWrapper>
     </Wrapper>
   );
 };
@@ -141,9 +151,10 @@ const Input = styled.input`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 50%;
+  width: "360px";
+  height: "88px";
   display: flex;
-  flex-direction: ${isMobile ? "column" : "row"};
+  flex-direction: row;
   justify-content: ${isMobile ? "center" : "space-evenly"};
   margin-top: "10px";
 `;
@@ -162,14 +173,14 @@ const Button = styled.div`
   -webkit-box-pack: center;
   justify-content: center;
   padding: 0.3rem 0.875rem;
-  color: white;
   font-size: 0.875rem;
-  background-color: blue;
   cursor: pointer;
   border-radius: 4px;
   word-break: keep-all;
   margin: 5px;
   font-family: "DoHyeon-Regular";
+  border: 0.5px solid rgb(200, 200, 200);
+  background-color: "red";
 `;
 const Hint = styled.div`
   font-size: 10pt;
@@ -177,4 +188,12 @@ const Hint = styled.div`
   justify-content: flex-end;
   align-items: center;
   font-family: "DoHyeon-Regular";
+`;
+const Title = styled.div`
+  font-size: 20pt;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: "DoHyeon-Regular";
+  padding-left: "10px";
 `;
