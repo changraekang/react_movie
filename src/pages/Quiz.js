@@ -30,8 +30,9 @@ const Quiz = () => {
   const [hint1, setHint1] = useState(true);
   const [hint2, setHint2] = useState(false);
   const [hint3, setHint3] = useState(false);
-  const hintString = "O".repeat(quiztitlelength[quizNum - 1].length);
-  console.log(quiztitlelength, ":: quiztitlelength");
+  const hintString = "O".repeat(
+    quiztitlelength[quizNum - 1].length - Answer.length
+  );
   useEffect(() => {
     console.log(quizHintUsed, ":: QuizHintUsed");
   }, [quizidx.length, quizHintUsed, setQuizHintUsed]);
@@ -89,26 +90,66 @@ const Quiz = () => {
         }}
       >
         <Title>{quizNum} Quiz</Title>
-        <Hint>정답: {quiztitlelength[quizNum - 1].length}글자</Hint>
+        <Hint>Points: </Hint>
       </div>
       <ButtonWrapper>
         <Button onClick={() => onClickHint(1)}>
-        <img src={trail} alt="trail" width={36} height={36} />{" "}
-          <div></div>
+          <img src={trail} alt="trail" width={36} height={36} />{" "}
+          <Hint>Hint1 - 명대사 & OST</Hint>
         </Button>
-        <Button onClick={() => onClickHint(2)}><img src={film} alt="film" width={36} height={36} />{" "}</Button>
-        <Button onClick={() => onClickHint(3)}><img src={poster} alt="poster" width={36} height={36} />{" "}</Button>
+        <Button onClick={() => onClickHint(2)}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <img src={film} alt="film" width={36} height={36} />
+            <Hint>-1</Hint>
+          </div>
+          <Hint>Hint2 - 영화 속 장면</Hint>
+        </Button>
+        <Button onClick={() => onClickHint(3)}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <img src={poster} alt="poster" width={36} height={36} />{" "}
+            <Hint>-3</Hint>
+          </div>
+          <Hint>Hint3 - 영화 포스터</Hint>
+        </Button>
       </ButtonWrapper>
 
       <InputContainer>
         <InputLabel>정답</InputLabel>
-        <Input
-          type="input"
-          placeholder="정답을 입력해주세요"
-          onChange={(e) => setAnswer(e.target.value.trim())}
-          value={Answer}
-          onKeyPress={(e) => e.key === "Enter" && onClickSubmit()}
-        />
+        <div>
+          <AnswerSheet>
+            {Answer}
+            {hintString}
+          </AnswerSheet>
+          <Input
+            type="input"
+            placeholder="정답을 입력해주세요"
+            onChange={(e) => {
+              const newValue = e.target.value.trim();
+              // 입력 값의 길이가 quiztitlelength[quizNum - 1].length 이하인지 확인
+              if (newValue.length <= quiztitlelength[quizNum - 1].length) {
+                setAnswer(newValue); // 조건을 만족하면 상태 업데이트
+              }
+            }}
+            value={Answer}
+            onKeyPress={(e) => e.key === "Enter" && onClickSubmit()}
+          />
+        </div>
         <Button onClick={onClickSubmit}>제출하기</Button>
       </InputContainer>
       <HintWrapper>{renderHintComponent()}</HintWrapper>
@@ -128,8 +169,9 @@ const Wrapper = styled.div`
 `;
 const InputContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-top: 20px;
+  align-items: center;
 `;
 const QuizContainer = styled.div`
   display: flex;
@@ -142,14 +184,15 @@ const InputLabel = styled.label`
   margin: 0px;
   font-weight: bold;
   font-family: "DoHyeon-Regular";
+  padding-right: 10px;
 `;
-
 const Input = styled.input`
   margin-top: 10px;
   font-size: 12px;
   color: #033e93;
   height: 30px;
-  border: 1px solid rgb(200, 200, 200);
+  border: 0; /* 나머지 테두리를 제거합니다 */
+  border-bottom: 1px solid #033e93; /* 아래쪽 테두리만 추가 */
   padding-left: 10px;
   padding-right: 10px;
 `;
@@ -176,6 +219,7 @@ const Button = styled.div`
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
+  flex-direction: column;
   padding: 0.3rem 0.875rem;
   font-size: 0.875rem;
   cursor: pointer;
@@ -190,6 +234,13 @@ const Hint = styled.div`
   font-size: 10pt;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  font-family: "DoHyeon-Regular";
+`;
+const AnswerSheet = styled.div`
+  font-size: 10pt;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
   font-family: "DoHyeon-Regular";
 `;
