@@ -13,6 +13,9 @@ import Hint2 from "../components/Hint2";
 import Hint3 from "../components/Hint3";
 import styled from "styled-components";
 import config from "../config";
+import trail from "../assets/img/trail.png"; // Corrected import statement
+import poster from "../assets/img/poster.png"; // Corrected import statement
+import film from "../assets/img/film.png"; // Corrected import statement
 
 const Quiz = () => {
   const navigate = useNavigate();
@@ -81,21 +84,22 @@ const Quiz = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
           alignItems: "flex-end",
           width: "100%",
         }}
       >
         <Title>{quizNum} Quiz</Title>
-        <Hint>Points: {}</Hint>
+        <Hint>정답: {quiztitlelength[quizNum - 1].length}글자</Hint>
       </div>
       <ButtonWrapper>
-        <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
-        <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
-        <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
+        <Button onClick={() => onClickHint(1)}>
+        <img src={trail} alt="trail" width={36} height={36} />{" "}
+          <div></div>
+        </Button>
+        <Button onClick={() => onClickHint(2)}><img src={film} alt="film" width={36} height={36} />{" "}</Button>
+        <Button onClick={() => onClickHint(3)}><img src={poster} alt="poster" width={36} height={36} />{" "}</Button>
       </ButtonWrapper>
 
-      <Hint>정답: {hintString}</Hint>
       <InputContainer>
         <InputLabel>정답</InputLabel>
         <Input
@@ -195,5 +199,5 @@ const Title = styled.div`
   justify-content: flex-end;
   align-items: center;
   font-family: "DoHyeon-Regular";
-  padding-left: "10px";
+  padding-right: 10px;
 `;
