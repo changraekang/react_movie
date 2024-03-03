@@ -46,13 +46,22 @@ const Quiz = () => {
   };
 
   const onClickSubmit = () => {
+    // Update the quiz answers state with the new answer
+    setQuizans((currentAnswers) => {
+      const updatedAnswers = [...currentAnswers];
+      updatedAnswers[quizNum - 1] = Answer; // Assuming the quizNum corresponds to the index in the array
+      return updatedAnswers;
+    });
+
     nextQuiz();
+    resetHints();
+  };
+  const resetHints = () => {
     setHint1(true);
     setHint2(false);
     setHint3(false);
     setAnswer("");
   };
-
   const nextQuiz = () => {
     if (quizNum < 6) {
       navigate(`/quiz/${quizNum + 1}`);
@@ -108,7 +117,7 @@ const Quiz = () => {
             }}
           >
             <img src={film} alt="film" width={36} height={36} />
-            <Hint>-1</Hint>
+            <Hint></Hint>
           </div>
           <Hint>Hint2 - 영화 속 장면</Hint>
         </Button>
@@ -123,7 +132,7 @@ const Quiz = () => {
             }}
           >
             <img src={poster} alt="poster" width={36} height={36} />{" "}
-            <Hint>-3</Hint>
+            <Hint></Hint>
           </div>
           <Hint>Hint3 - 영화 포스터</Hint>
         </Button>

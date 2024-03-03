@@ -10,7 +10,7 @@ import {
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../components/Loading";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import config from "../config";
 import { Table, Form, Input, Button, message } from "antd";
 
@@ -24,79 +24,30 @@ const AnswerSheet = () => {
   const [loading, setLoading] = useState(true);
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
 
-  // Antd 요소
-  const columns = [
-    {
-      title: "No",
-      dataIndex: "no",
-      key: "no",
-    },
-    {
-      title: "퀴즈",
-      dataIndex: "quiz",
-      key: "quiz",
-    },
-    {
-      title: "사용자정답",
-      dataIndex: "userAnswer",
-      key: "userAnswer",
-    },
-    {
-      title: "힌트사용",
-      dataIndex: "hintUsed",
-      key: "hintUsed",
-    },
-    {
-      title: "점수",
-      dataIndex: "score",
-      key: "score",
-    },
-  ];
-
-  // 데이터 구성
-  const data = [];
   const navigate = useNavigate();
-  useEffect(() => {
-    for (let i = 0; i < 6; i++) {
-      console.log(quiztitlelength[i].answer);
-    }
-    console.log("quiztitlelength ::", quiztitlelength);
-    return () => {
-      calculateScore();
-    };
-  }, []);
 
-  const calculateScore = async () => {
-    let rankScore = 0;
-    for (let i = 0; i < 6; i++) {
-      console.log(quiztitlelength[i].answer);
-    }
-    return rankScore;
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const username = searchParams.get("username");
+  console.log(username, ":: username");
+  const combinedQuizData = quizans.map((answer, index) => ({
+    no: index + 1, // Assuming quiz number starts at 1
+    userAnswer: answer,
+    correctAnswer: quiztitlelength[index]?.answer,
+  }));
 
-  const submitScore = async () => {
-    try {
-      const score = await calculateScore();
-      setScore(score);
-      let body = {
-        user: rankuser.user,
-        score: score,
-        id: rankuser.userId,
-      };
-    } catch (err) {
-      console.log(err);
-    }
-
-    navigate(`/ranking?userId=${rankuser.userId}&username=${rankuser.user}`);
-  };
   return (
     <Container>
-      <Header>Quiz Answer Sheet</Header>
-      <Subtitle>Fill in your answers and scores below</Subtitle>
-      {[1, 2, 3, 4, 5, 6].map((number) => (
-        <QuizItem key={number}>
-          <Question>Quiz {number}</Question>
-          <AnswerButton>Answer</AnswerButton>
+      <Header>{username === "" ? "영덕후님" : username}의 답지</Header>
+      {combinedQuizData.map((quiz, index) => (
+        <QuizItem key={index}>
+          <Question>{`Quiz ${index + 1}`}</Question>
+          <Question>{`Your Answer: ${quiz.userAnswer}`}</Question>
+          <Question>{`정답: ${quiz.correctAnswer}`}</Question>
+          {quiz.correctAnswer === quiz.userAnswer ? (
+            <AnswerButton>O</AnswerButton>
+          ) : (
+            <WrongButton>X</WrongButton>
+          )}
         </QuizItem>
       ))}
     </Container>
@@ -140,7 +91,14 @@ const Question = styled.div`
 
 const AnswerButton = styled.button`
   padding: 10px 20px;
-  background-color: black;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
+const WrongButton = styled.button`
+  padding: 10px 20px;
+  background-color: red;
   color: white;
   border: none;
   cursor: pointer;
