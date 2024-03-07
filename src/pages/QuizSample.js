@@ -52,6 +52,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   };
 
   const fetchQuizLength = async () => {
+    console.log("fetchQuizLength", quizidx);
     try {
       const response = await fetch(`${config.apiUrl}/quizs/hint`, {
         method: "POST",

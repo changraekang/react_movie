@@ -20,8 +20,9 @@ const AnswerSheet = () => {
   const [user, setUser] = useRecoilState(QuizUser);
   const [quizNum, setQuizNum] = useState();
   const [quizSovle, setQuizSolve] = useState();
+  const [reQuizSeed, setReQuizSeed] = useState([]);
   const [rankuser, serRankuser] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
 
@@ -41,6 +42,50 @@ const AnswerSheet = () => {
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const fetchQuizLength = async () => {
+    let quizSeed = [];
+    for (let i = 0; i < 6; i++) {
+      let num;
+      do {
+        num = Math.floor(Math.random() * 160) + 1;
+      } while (quizSeed.includes(num)); // 이미 생성된 숫자인지 확인합니다.
+      quizSeed.push(num);
+    }
+    const imageUrls = quizSeed
+      .map((number) => [
+        `${config.assetsUrl}/level2/${number}.jpg`,
+        `${config.assetsUrl}/level3/${number}.jpg`,
+      ])
+      .flat();
+
+    imageUrls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+    setQuizidx(quizSeed);
+    try {
+      const response = await fetch(`${config.apiUrl}/quizs/hint`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quizidx: quizSeed }), // quizidx 배열을 JSON 형식으로 변환하여 전송
+      });
+      const data = await response.json();
+      // 데이터의 길이에 따라 버튼 활성화 상태 결정
+      setQuizTitlelength(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching quiz length:", error);
+    }
+  };
+
+  const onRestart = async () => {
+    setLoading(true);
+    await fetchQuizLength();
+    return navigate("/quiz/1", { state: "in" });
   };
   return (
     <Container>
@@ -88,6 +133,19 @@ const AnswerSheet = () => {
           />
         </LoadingModalWrapper>
       )}
+      <div
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "100%",
+          display: "flex",
+          paddingTop: "20px",
+        }}
+      >
+        <Button onClick={onRestart}>다시풀기</Button>
+        {/* <Button>공유하기</Button> */}
+      </div>
+      {loading && <Loading></Loading>}
     </Container>
   );
 };
@@ -169,4 +227,20 @@ const LoadingModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+`;
+const Button = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 25px; // 패딩을 70%로 조정
+  color: white;
+  font-size: 1rem; // 폰트 크기를 70%로 조정
+  background-color: #0095eb;
+  cursor: pointer;
+  word-break: keep-all;
+  // 여백을 70%로 조정
+  font-family: "DoHyeon-Regular";
 `;

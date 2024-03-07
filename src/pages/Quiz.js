@@ -34,7 +34,9 @@ const Quiz = () => {
     quiztitlelength[quizNum - 1].length - Answer.length
   );
   useEffect(() => {
+    /* 
     console.log(quizHintUsed, ":: QuizHintUsed");
+ */
   }, [quizidx.length, quizHintUsed, setQuizHintUsed]);
 
   const updateHintUsage = (hintNumber) => {
@@ -99,7 +101,9 @@ const Quiz = () => {
         }}
       >
         <Title>{quizNum} Quiz</Title>
+        {/* 
         <Hint>Points: </Hint>
+         */}
       </div>
       <ButtonWrapper>
         <Button onClick={() => onClickHint(1)}>
