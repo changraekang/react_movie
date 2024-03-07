@@ -88,9 +88,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
         <Container>
           <Button onClick={() => onClickHint(1)}>Hint: 명대사 or OST</Button>
           <Description>
-            이 힌트는 기본힌트입니다.<br></br>
-            해당 영화나 TV 프로그램의 유명한 대사나 오리지널 사운드트랙에 관한
-            정보를 얻을 수 있습니다.
+            이 힌트는 해당 영화나 TV 프로그램의 유명한 대사나 OST입니다.
           </Description>
 
           <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
@@ -119,7 +117,7 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
 export default QuizSample;
 
 const Wrapper = styled.div`
-  height: 70vh; // 높이를 70%로 조정
+  height: 55vh; // 높이를 70%로 조정
   width: 100%; // 너비를 70%로 조정
   padding-top: "50px";
   padding-bottom: "50px";
@@ -192,7 +190,7 @@ const Button = styled.div`
   padding: 0.21rem 0.6125rem; // 패딩을 70%로 조정
   color: white;
   font-size: 0.6125rem; // 폰트 크기를 70%로 조정
-  background-color: blue;
+  background-color: #0095eb;
   cursor: pointer;
   border-radius: 4px;
   word-break: keep-all;

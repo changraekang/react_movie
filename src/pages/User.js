@@ -24,16 +24,21 @@ const User = () => {
       console.log(err);
     }
   };
-  const onChangeUser = (e) => {
-    setUser(e.target.value.trim());
-  };
+
   return (
     <Wrapper>
       <Header>결과보기</Header>
+      *최대 5글자까지 입력가능
       <Input
         type={"input"}
         placeholder="이름 입력해주세요"
-        onChange={onChangeUser}
+        onChange={(e) => {
+          const newValue = e.target.value.trim();
+          // 입력 값의 길이가 quiztitlelength[quizNum - 1].length 이하인지 확인
+          if (newValue.length <= 5) {
+            setUser(newValue); // 조건을 만족하면 상태 업데이트
+          }
+        }}
         value={user}
         onKeyPress={onPressInputText}
       ></Input>
@@ -76,8 +81,9 @@ const Button = styled.div`
   justify-content: center;
   padding: 0.3rem 0.875rem;
   color: white;
-  font-size: 0.875rem;
-  background-color: blue;
+  font-size: 1.275rem;
+  font-family: "DoHyeon-Regular";
+  background-color: #0095eb;
   cursor: pointer;
   border-radius: 4px;
   word-break: keep-all;

@@ -49,7 +49,9 @@ const AnswerSheet = () => {
         <QuizItem key={index}>
           <QuestionNo>{`Quiz ${index + 1}`}</QuestionNo>
           <div>
-            <Question>{`${username}님의 답: ${quiz.userAnswer}`}</Question>
+            <Question>{`${username === "" ? "영덕후님" : username}님의 답: ${
+              quiz.userAnswer
+            }`}</Question>
             <Question>{`정답: ${quiz.correctAnswer}`}</Question>
           </div>
           <div
@@ -143,7 +145,7 @@ const AnswerButton = styled.button`
   border-radius: 12px;
   color: white;
   border: none;
-  background-color: blue;
+  background-color: #0095eb;
   cursor: pointer;
 `;
 const WrongButton = styled.button`
@@ -152,7 +154,7 @@ const WrongButton = styled.button`
   border-radius: 12px;
   color: white;
   border: none;
-  background-color: red;
+  background-color: #f04040;
   cursor: pointer;
 `;
 const LoadingModalWrapper = styled.div`

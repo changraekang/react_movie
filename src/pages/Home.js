@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import popcorn from "../assets/img/popcorn-1.jpg"; // Corrected import statement
 import popcorn2 from "../assets/img/popcorn-2.jpg"; // Corrected import statement
@@ -162,7 +161,21 @@ const LoadingModalWrapper = styled.div`
   align-items: center;
   z-index: 1000;
 `;
-
+const Button = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.21rem 4.6125rem; // 패딩을 70%로 조정
+  color: white;
+  font-size: 1rem; // 폰트 크기를 70%로 조정
+  background-color: #0095eb;
+  cursor: pointer;
+  font-size: 25px;
+  border-radius: 4px;
+  word-break: keep-all;
+  margin: 3.5px; // 여백을 70%로 조정
+  font-family: "DoHyeon-Regular";
+`;
 const LoadingText = styled.div`
   color: white;
   font-size: 15px;

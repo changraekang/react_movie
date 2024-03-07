@@ -98,7 +98,7 @@ const QuizSolve = ({ onClose, quizNum, quizSovle }) => {
 export default QuizSolve;
 
 const Wrapper = styled.div`
-  height: 60vh;
+  height: 48vh;
   width: 100%;
   display: flex;
   justify-content: center;
