@@ -201,7 +201,7 @@ const InputLabel = styled.label`
 `;
 const Input = styled.input`
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 16px;
   color: #033e93;
   height: 30px;
   border: 0; /* 나머지 테두리를 제거합니다 */
