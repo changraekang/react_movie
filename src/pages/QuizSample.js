@@ -7,6 +7,9 @@ import config from "../config";
 import ReactAudioPlayer from "react-audio-player";
 import hintL2 from "../assets/sample/hint2.jpg";
 import hintL3 from "../assets/sample/hint3.jpg";
+import trail from "../assets/img/trail.png"; // Corrected import statement
+import poster from "../assets/img/poster.png"; // Corrected import statement
+import film from "../assets/img/film.png"; // Corrected import statement
 
 const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
   const navigate = useNavigate();
@@ -92,14 +95,16 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
 
           <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
           <Description>
-            이 힌트는 영화나 TV 프로그램의 명장면입니다. <br></br>
-            사용 시 3점이 감점됩니다.
+            이 힌트는 영화나 TV 프로그램의 명장면입니다.{" "}
+            {/* <br></br>
+            사용 시 3점이 감점됩니다. */}
           </Description>
 
           <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
           <Description>
-            이 힌트는 해당 영화나 TV 프로그램의 포스터를 제공합니다. <br></br>
-            사용 시 3점이 감점됩니다.
+            이 힌트는 해당 영화나 TV 프로그램의 포스터를 제공합니다.
+            {/*  <br></br>
+            사용 시 3점이 감점됩니다. */}
           </Description>
         </Container>
         <HintWrapper>{renderHintComponent()}</HintWrapper>
@@ -173,7 +178,7 @@ const ButtonWrapper = styled.div`
 
 const HintWrapper = styled.div`
   width: 21%; // 너비를 70%로 조정
-  height: 210px; // 높이를 70%로 조정
+  height: 280px; // 높이를 70%로 조정
   padding-top: 15;
   display: flex;
   justify-content: center;
