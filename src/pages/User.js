@@ -50,7 +50,7 @@ const User = () => {
 export default User;
 const Input = styled.input`
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 16px;
   color: #033e93;
   height: 30px;
   border: 1px solid rgb(200, 200, 200);
