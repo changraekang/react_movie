@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import config from "../config";
 import QuizSolve from "./QuizSolve";
+import KakaoShareButton from "../components/KakaoShareButton";
 const AnswerSheet = () => {
   const [quizidx, setQuizidx] = useRecoilState(QuizQuestion);
   const [quizans, setQuizans] = useRecoilState(QuizAnswer);
@@ -27,7 +28,13 @@ const AnswerSheet = () => {
   const [isScoreOpen, setIsScoreOpen] = useState(true);
   const [answerScore, setAnswerScore] = useState("");
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
-
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  }, []);
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -104,7 +111,7 @@ const AnswerSheet = () => {
     } else {
       setAnswerScore(`${correctAnswers}개 맞추셨습니다.`);
     }
-  }, [correctAnswers]);
+  }, [correctAnswers, username]);
   return (
     <Container>
       <Header>{username === "" ? "영덕후님" : username}님의 답지</Header>
@@ -161,6 +168,7 @@ const AnswerSheet = () => {
         }}
       >
         <Button onClick={onRestart}>다시풀기</Button>
+        <KakaoShareButton description={answerScore}></KakaoShareButton>
         {/* <Button>공유하기</Button> */}
       </div>
       {loading && <Loading></Loading>}

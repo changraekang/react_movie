@@ -4,13 +4,13 @@ import config from "../config";
 
 const { Kakao } = window;
 
-const KakaoShareButton = ({ name, data }) => {
+const KakaoShareButton = ({ description }) => {
   const url = "https://quiz.movie-hop.com";
   const resultUrl = window.location.href;
   React.useEffect(() => {
     try {
       if (!Kakao.isInitialized()) {
-        Kakao.init("7dd6d528b40979ba800bbad6b5633ea0");
+        Kakao.init("eb4472ecd006a9da646f733ee652b9dd");
         Kakao.isInitialized();
       } else {
       }
@@ -21,7 +21,7 @@ const KakaoShareButton = ({ name, data }) => {
       objectType: "feed",
       content: {
         title: "영덕후능력평가 결과",
-        description: `${name}의 점수는 ${data} 입니다`,
+        description: description,
         imageUrl: `${config.assetsUrl}/logo/popcorn.jpeg`,
         link: {
           mobileWebUrl: resultUrl,
