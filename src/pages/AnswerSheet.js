@@ -24,6 +24,8 @@ const AnswerSheet = () => {
   const [rankuser, serRankuser] = useState({});
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScoreOpen, setIsScoreOpen] = useState(true);
+  const [answerScore, setAnswerScore] = useState("");
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
 
   const navigate = useNavigate();
@@ -87,9 +89,25 @@ const AnswerSheet = () => {
     await fetchQuizLength();
     return navigate("/quiz/1", { state: "in" });
   };
+
+  // Calculate correct answers
+  const correctAnswers = combinedQuizData.filter(
+    (quiz) => quiz.correctAnswer === quiz.userAnswer
+  ).length;
+
+  // useEffect to show popup message based on number of correct answers
+  useEffect(() => {
+    if (correctAnswers >= 6) {
+      setAnswerScore("씨네필이네요!");
+    } else if (correctAnswers >= 3) {
+      setAnswerScore("영화 매니아시네요!");
+    } else {
+      setAnswerScore(`${correctAnswers}개 맞추셨습니다.`);
+    }
+  }, [correctAnswers]);
   return (
     <Container>
-      <Header>{username === "" ? "영덕후님" : username}의 답지</Header>
+      <Header>{username === "" ? "영덕후님" : username}님의 답지</Header>
       {combinedQuizData.map((quiz, index) => (
         <QuizItem key={index}>
           <QuestionNo>{`Quiz ${index + 1}`}</QuestionNo>
@@ -146,6 +164,18 @@ const AnswerSheet = () => {
         {/* <Button>공유하기</Button> */}
       </div>
       {loading && <Loading></Loading>}
+      {isScoreOpen && (
+        <Wrapper>
+          <Modal>
+            <ModalWrapper>
+              <ModalContent>
+                <WrapContents>{answerScore}</WrapContents>
+              </ModalContent>
+              <Button onClick={() => setIsScoreOpen(false)}>닫기</Button>
+            </ModalWrapper>
+          </Modal>
+        </Wrapper>
+      )}
     </Container>
   );
 };
@@ -243,4 +273,62 @@ const Button = styled.div`
   word-break: keep-all;
   // 여백을 70%로 조정
   font-family: "DoHyeon-Regular";
+`;
+const Wrapper = styled.div`
+  position: fixed;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Pretendard-Regular";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 40px 0;
+  border-radius: 16px;
+  min-width: 400px;
+`;
+
+const WrapContents = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  position: relative;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px 16px 0 0;
+  font-family: "Pretendard-Regular";
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  padding: 16px 24px 16px 16px;
+  pointer-events: auto;
+  border-radius: 8px;
+  outline: 0;
+  margin-bottom: 24px;
 `;

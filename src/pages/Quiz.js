@@ -143,9 +143,9 @@ const Quiz = () => {
       </ButtonWrapper>
 
       <InputContainer>
-        <InputLabel>정답</InputLabel>
         <div>
           <AnswerSheet>
+            정답:
             {Answer}
             {hintString}
           </AnswerSheet>

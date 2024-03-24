@@ -92,14 +92,14 @@ const QuizSample = ({ checkAllLoaded, setIsLoading }) => {
             이 힌트는 해당 영화나 TV 프로그램의 유명한 대사나 OST입니다.
           </Description>
 
-          <Button onClick={() => onClickHint(2)}>Hint: 명장면 감점-1</Button>
+          <Button onClick={() => onClickHint(2)}>Hint: 명장면 </Button>
           <Description>
             이 힌트는 영화나 TV 프로그램의 명장면입니다.{" "}
             {/* <br></br>
             사용 시 3점이 감점됩니다. */}
           </Description>
 
-          <Button onClick={() => onClickHint(3)}>Hint: 포스터 감점-3</Button>
+          <Button onClick={() => onClickHint(3)}>Hint: 포스터</Button>
           <Description>
             이 힌트는 해당 영화나 TV 프로그램의 포스터를 제공합니다.
             {/*  <br></br>
