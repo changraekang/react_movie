@@ -109,12 +109,16 @@ const AnswerSheet = () => {
     } else if (correctAnswers >= 3) {
       setAnswerScore(username + "님은 영화 매니아시네요👍👍");
     } else {
-      setAnswerScore(`${correctAnswers}개 맞추셨습니다.`);
+      setAnswerScore(
+        `${
+          username === "" ? "영덕후" : username
+        }님이 ${correctAnswers}개 맞추셨습니다.`
+      );
     }
   }, [correctAnswers, username]);
   return (
     <Container>
-      <Header>{username === "" ? "영덕후님" : username}님의 답지</Header>
+      <Header>{username === "" ? "영덕후" : username}님의 답지</Header>
       {combinedQuizData.map((quiz, index) => (
         <QuizItem key={index}>
           <QuestionNo>{`Quiz ${index + 1}`}</QuestionNo>
