@@ -105,9 +105,9 @@ const AnswerSheet = () => {
   // useEffect to show popup message based on number of correct answers
   useEffect(() => {
     if (correctAnswers >= 6) {
-      setAnswerScore(username + "님은 씨네필이네요!🎉🎉");
+      setAnswerScore(username + "님은 씨네필이네요🎉🎉");
     } else if (correctAnswers >= 3) {
-      setAnswerScore(username + "님은 영화 매니아시네요!👍👍");
+      setAnswerScore(username + "님은 영화 매니아시네요👍👍");
     } else {
       setAnswerScore(`${correctAnswers}개 맞추셨습니다.`);
     }
