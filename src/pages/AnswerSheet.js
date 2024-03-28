@@ -6,6 +6,7 @@ import {
   QuizUser,
   Ranking,
   QuizTitleLength,
+  IsReset,
 } from "../atom/Atom";
 import styled from "styled-components";
 import axios from "axios";
@@ -28,6 +29,7 @@ const AnswerSheet = () => {
   const [isScoreOpen, setIsScoreOpen] = useState(true);
   const [answerScore, setAnswerScore] = useState("");
   const [quiztitlelength, setQuizTitlelength] = useRecoilState(QuizTitleLength);
+  const [IsResetQuiz, setIsResetQuiz] = useRecoilState(IsReset);
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -38,7 +40,7 @@ const AnswerSheet = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const username = searchParams.get("username");
+  const username = searchParams.get("username") || "영덕후";
   const combinedQuizData = quizans.map((answer, index) => ({
     no: index + 1, // Assuming quiz number starts at 1
     userAnswer: answer,
@@ -101,9 +103,41 @@ const AnswerSheet = () => {
   const correctAnswers = combinedQuizData.filter(
     (quiz) => quiz.correctAnswer === quiz.userAnswer
   ).length;
-
+  const submitUserScore = async ({ username, correctAnswers }) => {
+    setLoading(true);
+    let body = JSON.stringify({
+      username: username,
+      score: correctAnswers,
+    });
+    try {
+      const response = await fetch(`${config.apiUrl}/quizs/user/ranking`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      });
+      const data = response.status;
+      if (data === 200) {
+        // 응답 본문을 JSON으로 파싱합니다.
+        const jsonResponse = await response.json();
+        setLoading(false);
+        console.log(jsonResponse);
+      } else {
+        // 응답 상태가 200이 아닐 때의 처리
+        console.log("응답 상태::", data);
+      }
+    } catch (error) {
+      console.error("Error fetching quiz length:", error);
+    }
+  };
   // useEffect to show popup message based on number of correct answers
   useEffect(() => {
+    if (username && correctAnswers !== undefined) {
+      console.log("유저 :", username, "정답개수 :", correctAnswers);
+      submitUserScore({ username, correctAnswers }); // 수정된 함수 호출 방식
+    }
+
     if (correctAnswers >= 6) {
       setAnswerScore(username + "님은 씨네필이네요🎉🎉");
     } else if (correctAnswers >= 3) {
@@ -123,7 +157,7 @@ const AnswerSheet = () => {
         <QuizItem key={index}>
           <QuestionNo>{`Quiz ${index + 1}`}</QuestionNo>
           <div>
-            <Question>{`${username === "" ? "영덕후님" : username}님의 답: ${
+            <Question>{`${username === "" ? "영덕후" : username}님의 답: ${
               quiz.userAnswer
             }`}</Question>
             <Question>{`정답: ${quiz.correctAnswer}`}</Question>
@@ -173,7 +207,6 @@ const AnswerSheet = () => {
       >
         <Button onClick={onRestart}>다시풀기</Button>
         <KakaoShareButton description={answerScore}></KakaoShareButton>
-        {/* <Button>공유하기</Button> */}
       </div>
       {loading && <Loading></Loading>}
       {isScoreOpen && (

@@ -72,6 +72,10 @@ const IsMobile = atom({
   key: "mobile", // unique ID (with respect to other atoms/selectors)
   default: false, // default value (aka initial value)
 });
+const IsReset = atom({
+  key: "reset", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
 
 export {
   QuizQuestion,
@@ -81,4 +85,5 @@ export {
   IsMobile,
   QuizHintUsed,
   QuizTitleLength,
+  IsReset,
 };
